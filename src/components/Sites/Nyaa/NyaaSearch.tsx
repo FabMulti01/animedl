@@ -21,15 +21,8 @@ export const NyaaSearch: React.FC = () => {
         const getNyaa = async () => {
             setLoading(true);
             const anime = await loadNyaa(nome, lingua);
-            if (loading) {
-                setNyaa(anime);
-                setLoading(false);
-            } else {
-                console.log("Caricamento delle informazioni annullato!");
-            }
-            return () => {
-                setLoading(false);
-            };
+            setNyaa(anime);
+            setLoading(false);
         };
         getNyaa();
     }, [lingua]);
