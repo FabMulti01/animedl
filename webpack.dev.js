@@ -1,6 +1,5 @@
 const path = require("path");
 const { merge } = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = () => {
     const config = {
@@ -41,12 +40,6 @@ module.exports = () => {
                 },
             ],
         },
-        plugins: [
-            new HtmlWebpackPlugin({
-                template: "./src/index.html",
-                filename: "index.html",
-            }),
-        ],
     });
 
     const main = merge(config, {

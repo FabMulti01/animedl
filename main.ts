@@ -7,7 +7,7 @@ initRenderer();
 let win: Electron.BrowserWindow;
 //Serve per dire a windows che App é
 app.setAppUserModelId("AnimeDL");
-//Controllo se ci sono aggiornamenti all'avvio
+
 
 function createWindow() {
     win = new BrowserWindow({
@@ -31,7 +31,10 @@ app.whenReady().then(() => {
     createWindow();
     win.once("ready-to-show", () => {
         win.show();
-        if (isDev) {
+        if (!isDev) {
+            //https://github.com/electron-userland/electron-builder/issues/4435
+            autoUpdater.autoDownload = false
+            //Controllo se ci sono aggiornamenti all'avvio
             autoUpdater.checkForUpdates();
         }
     });
@@ -97,7 +100,7 @@ autoUpdater.on("update-downloaded", () => {
     dialog
         .showMessageBox({
             title: "Installa aggiornamento",
-            message: "Ho scaricato l'aggiornamento, ora lo installo...",
+            message: "Ho scaricato l'aggiornamento, cliccando Ok l'app verrá chiusa e aggiornata!",
         })
         .then(() => {
             setImmediate(() => autoUpdater.quitAndInstall());
