@@ -1,2 +1,2 @@
 # AnimeDL
-Motore di ricerca per gli anime, e torrent
+Motore di ricerca per gli anime, e torrent italiani
