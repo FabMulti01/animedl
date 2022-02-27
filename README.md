@@ -1,2 +1,8 @@
 # AnimeDL
-Motore di ricerca per gli anime, e torrent italiani
+
+Motore di ricerca per gli anime italiani, e torrent
+
+# Siti disponibili
+
+Nyaa
+AnimeWorld

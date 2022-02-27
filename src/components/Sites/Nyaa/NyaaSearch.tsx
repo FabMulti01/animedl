@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { FaMagnet, FaInfoCircle } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 import { Nyaa } from "../../../search/Nyaa/Nyaa";
 import { loadNyaa } from "../../../search/Nyaa/NyaaMethods";
+import { NyaaEntry } from "./NyaaEntry";
 
 enum selettore {
     italiano = "Italiano",
@@ -11,7 +11,6 @@ enum selettore {
 }
 
 export const NyaaSearch: React.FC = () => {
-    const navigate = useNavigate();
     const { fix, nome } = useParams();
     const [loading, setLoading] = useState(true);
     const [Nyaa, setNyaa] = useState<Nyaa[]>([]);
@@ -106,36 +105,8 @@ export const NyaaSearch: React.FC = () => {
                         <th>Peso</th>
                         <th>Magnet</th>
                     </tr>
-                    {Nyaa.map((Nyaa, index) => {
-                        return (
-                            <tr
-                                key={index}
-                                className="hover:bg-neutral-700 duration-200 rounded"
-                            >
-                                <td className="w-9/12">{Nyaa.nome}</td>
-                                <td>
-                                    <button
-                                        onClick={() =>
-                                            navigate("/NyaaInfo/" + fix, {
-                                                state: Nyaa,
-                                            })
-                                        }
-                                        className="w-8 h-8 text-black text-center rounded bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-400 hover:text-white duration-200"
-                                    >
-                                        <FaInfoCircle />
-                                    </button>
-                                </td>
-                                <td>{Nyaa.seeds}</td>
-                                <td>{Nyaa.peso}</td>
-                                <td>
-                                    <a href={Nyaa.magnet}>
-                                        <button className="w-8 h-8 text-black text-center rounded bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-400 hover:text-white duration-200">
-                                            <FaMagnet />
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                        );
+                    {Nyaa.map((Nyaa, i) => {
+                        return <NyaaEntry key={i} Nyaa={Nyaa} fix={fix} />;
                     })}
                 </tbody>
             </table>

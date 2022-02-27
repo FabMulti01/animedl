@@ -28,12 +28,14 @@ export const Cerca: React.FC = () => {
 
     return (
         <div className="text-center w-full h-full">
-            <div className="w-full text-white shadow-sm shadow-black">
+            <div className="w-full text-white">
                 <button
                     onClick={() => setSite(true)}
                     className={classNames(
-                        "w-1/2 h-12 duration-200 hover:bg-neutral-700 active:bg-neutral-500 bg-blend-lighten",
-                        site ? "bg-neutral-700" : "bg-neutral-800"
+                        "w-1/2 h-12 duration-200 ",
+                        !site
+                            ? "bg-neutral-800 shadow-sm shadow-black hover:bg-neutral-700 hover:text-white active:bg-neutral-600"
+                            : "bg-dark-grey"
                     )}
                 >
                     AnimeWorld
@@ -41,8 +43,10 @@ export const Cerca: React.FC = () => {
                 <button
                     onClick={() => setSite(false)}
                     className={classNames(
-                        "w-1/2 h-12 duration-200 hover:bg-neutral-700 active:bg-neutral-500 bg-blend-lighten",
-                        !site ? "bg-neutral-700" : "bg-neutral-800"
+                        "w-1/2 h-12 duration-200",
+                        site
+                            ? "bg-neutral-800 shadow-sm shadow-black hover:bg-neutral-700 hover:text-white active:bg-neutral-600"
+                            : "bg-dark-grey"
                     )}
                 >
                     Nyaa

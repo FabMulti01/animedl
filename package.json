@@ -1,7 +1,7 @@
 {
     "name": "animedl",
     "productName": "AnimeDL",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "author": "Emirato Puglia Sardegna",
     "repository": {
@@ -13,17 +13,15 @@
     "main": "./app/main.js",
     "scripts": {
         "start": "electron ./app/main.js",
-        "webpack dev": "webpack --config ./webpack.dev.js",
         "tailwind": "npx tailwindcss -i ./src/styles/custom.css -o ./src/styles/main.css --watch",
-        "webpack prod": "webpack --config ./webpack.prod.js",
+        "webpack": "webpack --config ./webpack.config.js",
         "build dev": "electron-builder build --win --publish never",
-        "build && release": "webpack --config ./webpack.prod.js && electron-builder build --win --publish always",
+        "build && release": "webpack --config ./webpack.config.js && electron-builder build --win --publish always",
         "release": "electron-builder --publish always"
     },
     "build": {
         "files": [
-            "app/*",
-            "index.html"
+            "app/*"
         ],
         "nsis": {
             "oneClick": false,
@@ -46,6 +44,7 @@
         "@types/request": "^2.48.8",
         "css-loader": "^6.6.0",
         "electron": "^17.0.1",
+        "html-webpack-plugin": "^5.5.0",
         "postcss": "^8.4.6",
         "postcss-loader": "^6.2.1",
         "react": "^17.0.2",

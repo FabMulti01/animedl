@@ -5,7 +5,6 @@ import { Episodio } from "../../stores/Download";
 import { Notifica } from "../../addons/Notifications";
 //Bottoni per controllare il download
 import * as Bottone from "./Buttons";
-import { DownloadStore } from "../../stores/Download";
 import { getEpisodeDownloadLink } from "../../search/AW/AWMethods";
 import { DownloaderHelper } from "node-downloader-helper";
 
@@ -26,13 +25,13 @@ enum STATO {
     PAUSA = "Pausa",
 }
 
-interface DownloadItem {
+interface IDownloadItem {
     episodio: Episodio;
     directory: string;
     nome: string;
 }
 
-export const DownloadItem: React.FC<DownloadItem> = ({
+export const DownloadItem: React.FC<IDownloadItem> = ({
     episodio,
     directory,
     nome,

@@ -1,5 +1,6 @@
 const path = require("path");
 const { merge } = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = () => {
     const config = {
@@ -38,15 +39,21 @@ module.exports = () => {
                 },
             ],
         },
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: "./src/index.html",
+                filename: "index.html",
+            }),
+        ],
     });
 
     const main = merge(config, {
         target: "electron-main",
-        entry: "./main.ts",
+        entry: "./src/main.ts",
         output: {
             filename: "main.js",
         },
     });
 
-    return [main, renderer];
+    return [renderer, main];
 };
