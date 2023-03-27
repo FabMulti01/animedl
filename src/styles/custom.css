@@ -1,0 +1,34 @@
+.drag {
+    -webkit-app-region: drag;
+}
+
+.titlebar {
+    -webkit-app-region: no-drag;
+    height: 31px;
+}
+
+/* Mi serve per rimuovere la linetta sotto ai navlink */
+a {
+    text-decoration: none;
+}
+
+/* Custom CSS per le informazioni di Nyaa che blocca i link e imposta le grandezze massime */
+.nyaaInfo img {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    max-height: 100%;
+    user-select: none;
+}
+
+.nyaaInfo a {
+    pointer-events: none !important;
+}
+
+.infoNyaa p {
+    text-align: justify;
+}
+
+.infoNyaa pre {
+    overflow: auto;
+}
