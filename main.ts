@@ -34,29 +34,23 @@ function createWindow() {
         win.loadFile("dist/index.html");
     }
 }
-
-app.whenReady().then(() => {
-    createWindow();
-
-    win.once("ready-to-show", () => {
-        win.show();
-        win.webContents.send("setDownloadFolder", app.getPath("downloads"));
+if (app.requestSingleInstanceLock({ additionalData: "AnimeDL" })) {
+    app.whenReady().then(() => {
+        createWindow();
+        win.once("ready-to-show", () => {
+            win.show();
+            //Imposto il path di download di sistema
+            win.webContents.send("setDownloadFolder", app.getPath("downloads"));
+        });
     });
-});
-
-//Impedisce all'app di essere aperta piu volte
-app.on("second-instance", () => {
-    if (win) {
-        // Focus on the main window if the user tried to open another
-        if (win.isMinimized()) win.restore();
-        win.focus();
-    }
-});
-
+} else {
+    app.quit();
+}
 //Controlli nella Topnav
 ipcMain.handle("minimize", () => {
     win.minimize();
 });
+
 ipcMain.handle("maximize", () => {
     win.maximize();
 });
@@ -98,6 +92,11 @@ ipcMain.handle("messaggioInfo", (event, title, message) => {
 //Notifica
 ipcMain.handle("notifica", (event, title, body) => {
     new Notification(title, { body: body });
+});
+
+//Aggiornamento
+ipcMain.handle("checkUpdate", () => {
+    autoUpdater.checkForUpdates();
 });
 
 //Utility per aggiornamento
