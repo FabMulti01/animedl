@@ -1,4 +1,4 @@
-//Pagina per i bottoni che stoppano/riprendono/pausano il download dell'anime
+//I bottoni che vengono visualizzati in ogni episodio
 import React from "react";
 import { DownloaderHelper } from "node-downloader-helper";
 import { Button } from "@mantine/core";

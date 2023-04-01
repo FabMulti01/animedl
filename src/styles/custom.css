@@ -7,6 +7,19 @@
     height: 31px;
 }
 
+/* Il bottone per uscire diventa rosso */
+.exit:hover {
+    color: white;
+    background-color: #c90000;
+}
+
+/* Piccola animazione per le parti interattive */
+button,
+a,
+tr {
+    transition-duration: 100ms;
+}
+
 /* Mi serve per rimuovere la linetta sotto ai navlink */
 a {
     text-decoration: none;

@@ -3,15 +3,12 @@ import React from "react";
 import { Text, Button, Title } from "@mantine/core";
 import { ipcRenderer } from "electron";
 
-export const Feedback: React.FC = () => {
+export const Segnala: React.FC = () => {
     return (
         <tr>
             <td>
-                <Title order={3}>Feedback</Title>
-                <Text>
-                    Se vuoi lasciare un Feedback oppure segnalare un problema,
-                    Textclicca il bottone!
-                </Text>
+                <Title order={3}>Segnala un problema</Title>
+                <Text>Se vuoi segnalare un problema, clicca il bottone!</Text>
             </td>
             <td>
                 <Button
@@ -23,7 +20,7 @@ export const Feedback: React.FC = () => {
                         );
                     }}
                 >
-                    Lascia un Feedback
+                    Segnala
                 </Button>
             </td>
         </tr>

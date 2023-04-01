@@ -10,6 +10,7 @@ import { Header, Button, Flex } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import ExitCheck from "@/ExitCheck";
 
+//La barra in alto
 export const Titlebar: React.FC = () => {
     const navigate = useNavigate();
     const [maximized, isMaximized] = useState(false);
@@ -28,6 +29,7 @@ export const Titlebar: React.FC = () => {
             <Flex>
                 <div style={{ width: "50%" }}>
                     <Button
+                        title="Torna indietro"
                         radius={0}
                         className="titlebar"
                         onClick={() => {
@@ -40,20 +42,25 @@ export const Titlebar: React.FC = () => {
                 <div style={{ width: "50%" }}>
                     <Button.Group style={{ float: "right" }}>
                         <Button
+                            title="Minimizza"
                             radius={0}
                             className="titlebar"
                             onClick={() => ipcRenderer.invoke("minimize")}
                         >
                             <VscChromeMinimize />
                         </Button>
-                        <Button className="titlebar" onClick={handleMaximize}>
+                        <Button
+                            title={maximized ? "Minimizza" : "Maximizza"}
+                            className="titlebar"
+                            onClick={handleMaximize}
+                        >
                             <VscChromeMaximize />
                         </Button>
                         <Button
+                            title="Chiudi AnimeDL"
                             radius={0}
-                            className="titlebar"
+                            className="titlebar exit"
                             onClick={ExitCheck}
-                            color={"red"}
                         >
                             <VscChromeClose />
                         </Button>

@@ -7,8 +7,13 @@ import AW from "./AnimeWorld";
  * @returns l'array con tutti gli anime trovati
  */
 export async function loadAW(nome: string): Promise<AW[]> {
+    let cheerio = null;
     const ANIMESEARCH = "https://www.animeworld.tv/search?keyword=";
-    const cheerio = await scraper(ANIMESEARCH + nome);
+    try {
+        cheerio = await scraper(ANIMESEARCH + nome);
+    } catch (e) {
+        return;
+    }
     const anime: AW[] = [];
     for (let i = 0; i < cheerio("div[class=inner] a[class=name]").length; i++) {
         anime[i] = new AW(
@@ -30,7 +35,7 @@ function getNome(index: number, cheerio: cheerio.Root): string {
     try {
         return cheerio("a[class=name]").contents()[index].data;
     } catch (e) {
-        console.warn("Errore nel caricamento del nome: ", e);
+        console.warn("Errore nel caricamento del nome: ", e.message);
         return "Non disponibile!";
     }
 }
@@ -48,7 +53,7 @@ function getLink(index: number, cheerio: cheerio.Root): string {
             cheerio("a[class=poster]").eq(index).attr("href")
         );
     } catch (e) {
-        console.warn("Errore nel caricamento del link dell'anime: ", e);
+        console.warn("Errore nel caricamento del link dell'anime: ", e.message);
         return "";
     }
 }
@@ -63,7 +68,10 @@ function getImmagine(index: number, cheerio: cheerio.Root): string {
     try {
         return cheerio("a[class=poster]").eq(index).children().attr("src");
     } catch (e) {
-        console.warn("Errore nel caricamento del link dell'immagine: ", e);
+        console.warn(
+            "Errore nel caricamento del link dell'immagine: ",
+            e.message
+        );
         return "";
     }
 }

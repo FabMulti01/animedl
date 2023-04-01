@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import usePromise from "react-promise-suspense";
+import { Table, Title, Text } from "@mantine/core";
 import type Nyaa from "@/types/sites/Nyaa/Nyaa";
 import { loadNyaa, ORDINE } from "@/types/sites/Nyaa/LoadNyaa";
 import { NyaaEntry } from "./NyaaEntry";
 import { BottoniOrdinamento } from "./BottoniOrdinamento";
 import { BottoniLingua } from "./BottoniLingua";
 import { selettore } from "@/types/sites/Nyaa/Nyaa";
-import { Table, Title } from "@mantine/core";
 
 const promise = (nome: string, lingua: string, ordine: ORDINE) =>
     loadNyaa(nome, lingua, ordine);
@@ -24,7 +24,24 @@ export const NyaaSearch: React.FC = () => {
         }
     }
 
+    // Se va in errore qualcosa che impedisce il caricamento
     if (Nyaa === undefined) {
+        return (
+            <>
+                <Title align="center">Errore Nyaa</Title>
+                <Text align="center">
+                    Errore con il caricamento degli anime per Nyaa
+                </Text>
+                <Text align="center">
+                    Controlla i log per maggiori informazioni{" "}
+                    <b>CTRL + ALT + I</b>
+                </Text>
+            </>
+        );
+    }
+
+    // Se non ci sono anime in lista
+    if (Nyaa === null) {
         return (
             <>
                 <Title align="center">

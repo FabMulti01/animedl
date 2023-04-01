@@ -3,15 +3,15 @@ import * as User from "@/types/UserSettings";
 import { Button, Text, Title } from "@mantine/core";
 
 type props = {
-    setDirectory(Directory: string);
-    setFast(FastExit: boolean);
+    setDirectory(Directory: string): void;
+    setFast(FastExit: boolean): void;
 };
 
 export const ResetSettings: React.FC<props> = ({ setDirectory, setFast }) => {
     async function reset() {
         User.resetSettings();
-        setDirectory(await User.getDownloadDir());
-        setFast(await User.getFastExit());
+        setDirectory(User.getDownloadDir());
+        setFast(User.getFastExit());
     }
 
     return (

@@ -1,13 +1,14 @@
 {
     "name": "animedl",
     "productName": "AnimeDL",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "private": true,
     "description": "Motore di ricerca per anime italiani e torrent multilingua",
     "main": "dist/main.js",
     "scripts": {
         "start": "vite",
-        "build:dev": "tsc && vite build && electron-builder"
+        "build:dev": "tsc && vite build && electron-builder --publish never",
+        "build:publish": "tsc && vite build && electron-builder --publish always"
     },
     "repository": {
         "type": "git",
@@ -21,7 +22,9 @@
     "homepage": "https://github.com/FabMulti01/animedl#readme",
     "build": {
         "files": [
-            "dist/*"
+            "dist/main.js",
+            "dist/index.html",
+            "dist/assets/*"
         ],
         "appId": "com.eps.animedl",
         "compression": "maximum",
@@ -52,6 +55,7 @@
         "@mantine/core": "^6.0.2",
         "@mantine/form": "^6.0.2",
         "@mantine/hooks": "^6.0.2",
+        "@mantine/notifications": "^6.0.5",
         "@mantine/nprogress": "^6.0.2",
         "cheerio": "^1.0.0-rc.12",
         "classnames": "^2.3.2",

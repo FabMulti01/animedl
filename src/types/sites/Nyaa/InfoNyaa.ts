@@ -16,14 +16,15 @@ export async function InfoNyaa(
     magnet: string
 ) {
     const appoggio = new Nyaa(nome, link, seeds, data, lingua, peso, magnet);
-    const sito = await scraper(link);
     try {
+        const sito = await scraper(link);
         appoggio.descrizione = MarkdownIt().render(
             sito("#torrent-description").html()
         );
     } catch (e) {
-        console.log(e);
-        appoggio.descrizione = "Descrizione non disponibile!";
+        console.warn("Errore nel caricamento della descrizione: ", e.message);
+        appoggio.descrizione =
+            "Descrizione non disponibile. Controlla i log per maggiori informazioni!";
     }
     return appoggio;
 }

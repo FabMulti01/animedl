@@ -19,13 +19,18 @@ export async function loadNyaa(
     lingua: string,
     ordine: ORDINE
 ): Promise<Nyaa[]> {
+    let cheerio = null;
     const NYAALINK = "https://nyaa.si";
     //Ritorna la tabella mostrata su Nyaa con tutti nella prima pagina di Nyaa
     const anime: Nyaa[] = [];
     lingua = selettoreLingua(lingua);
-    const cheerio = await scraper(
-        NYAALINK + "?f=0&c=1_0&q=" + nome + lingua + ordine
-    );
+    try {
+        cheerio = await scraper(
+            NYAALINK + "?f=0&c=1_0&q=" + nome + lingua + ordine
+        );
+    } catch {
+        return undefined;
+    }
     for (let i = 0; i < cheerio("td[colspan=2]").length; i++) {
         try {
             anime[i] = new Nyaa(
@@ -55,11 +60,14 @@ export async function loadNyaa(
                     .attr("href")
             );
         } catch (e) {
-            console.info(e);
+            console.warn(
+                "Errore con l'aggiunta dell'anime dell'array di Nyaa: ",
+                e.message
+            );
         }
     }
     if (anime.length === 0) {
-        return undefined;
+        return null;
     }
     return anime;
 }

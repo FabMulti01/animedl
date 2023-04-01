@@ -1,3 +1,4 @@
+import { AnimeDLEvents } from "@/types/AnimeDLEvents";
 import AW from "./AnimeWorld";
 
 /**
@@ -11,7 +12,11 @@ export async function InfoAW(
     immagine: string
 ): Promise<AW> {
     const appoggio: AW = new AW(nome, link, immagine);
-    await appoggio.setSito();
+    try {
+        await appoggio.setSito();
+    } catch (e) {
+        return undefined;
+    }
     appoggio.setEpisodi();
     appoggio.setStato();
     appoggio.setDescrizione();

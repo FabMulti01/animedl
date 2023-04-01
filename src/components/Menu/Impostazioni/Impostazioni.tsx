@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Cartella } from "./Cartella";
 import { FastExit } from "./FastExit";
 import { Aggiorna } from "./Aggiorna";
 import { ResetSettings } from "./ResetSettings";
-import { Feedback } from "./Feedback";
+import { Segnala } from "./Segnala";
 import { getDownloadDir, getFastExit } from "@/types/UserSettings";
 import { Title, Table } from "@mantine/core";
 
@@ -38,7 +38,7 @@ export const Settings: React.FC = () => {
                         setFast={setFast}
                     />
                     {/* Feedback */}
-                    <Feedback />
+                    <Segnala />
                 </tbody>
                 <caption>
                     Le impostazioni utente vengono salvate automaticamente

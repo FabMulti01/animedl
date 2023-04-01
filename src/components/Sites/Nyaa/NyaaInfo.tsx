@@ -1,10 +1,10 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import usePromise from "react-promise-suspense";
-import Nyaa from "@/types/sites/Nyaa/Nyaa";
+import { Table, Title, Text, Paper } from "@mantine/core";
+import type Nyaa from "@/types/sites/Nyaa/Nyaa";
 import { NyaaEntry } from "./NyaaEntry";
 import { InfoNyaa } from "@/types/sites/Nyaa/InfoNyaa";
-import { Table, Title, Text, Paper } from "@mantine/core";
 
 const promise = (
     nome: string,
@@ -19,6 +19,7 @@ const promise = (
 export const NyaaInfo: React.FC = () => {
     const { nome, data, link, seeds, peso, lingua, magnet } =
         useLocation().state;
+    //Se va in errore il recupero della descrizione non fa nulla
     const Nyaa: Nyaa = usePromise(
         promise,
         [nome, data, link, seeds, peso, lingua, magnet],

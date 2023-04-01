@@ -1,8 +1,7 @@
 import cheerio from "cheerio";
-//import { AnimeDLEvents } from "./AnimeDLEvents";
 
 /**
- *
+ * Utilizza Fetch per recuperare la pagina in HTML in base al link che viene dato
  * @param link Il link della pagina che si vuole ottenere
  * @returns La funzione "cheerio" per fare il parsing della pagina
  */
@@ -21,8 +20,8 @@ export async function scraper(link: string): Promise<cheerio.Root> {
                 }
             })
             .catch((e) => {
-                console.log(e);
-                throw new Error("Connessione");
+                console.log("Errore nello scraper", e);
+                reject(null);
             });
     });
 }

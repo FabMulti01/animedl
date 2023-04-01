@@ -2,17 +2,20 @@ import { observer } from "mobx-react";
 import React from "react";
 import { VscChevronRight } from "react-icons/vsc";
 import { EpisodioStore } from "@/stores/EpisodioStore";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Progress, Flex, Text, Button } from "@mantine/core";
+import { BottoniAnime } from "./BottoniAnime";
 
-interface Props {
+type props = {
     anime: EpisodioStore;
     nome: string;
-}
+};
 
-export const DownloadAnimeItem: React.FC<Props> = observer((props) => {
+export const DownloadAnimeItem: React.FC<props> = observer((props) => {
+    const navigate = useNavigate();
     const { anime } = props;
     const { nome } = props;
+
     return (
         <tr>
             <td>
@@ -23,21 +26,28 @@ export const DownloadAnimeItem: React.FC<Props> = observer((props) => {
             <td>
                 <Flex direction={"column"}>
                     <Progress
+                        title={anime.inDownload.toString() + " in download"}
                         size={"xl"}
                         animate={anime.inDownload > 0 ? true : false}
                         value={Number.parseFloat(anime.percentualeMedia)}
                     />
                 </Flex>
             </td>
-            <td className="text-center">
-                <Link
-                    to={"/DownloadAnimeInfo/" + nome.replaceAll("/", "%2F")}
-                    title="Info download"
-                >
-                    <Button>
+            <td>
+                <Button.Group>
+                    <BottoniAnime anime={anime} />
+                    <Button
+                        title="Info Download"
+                        onClick={() =>
+                            navigate(
+                                "/DownloadAnimeInfo/" +
+                                    nome.replaceAll("/", "%2F")
+                            )
+                        }
+                    >
                         <VscChevronRight />
                     </Button>
-                </Link>
+                </Button.Group>
             </td>
         </tr>
     );

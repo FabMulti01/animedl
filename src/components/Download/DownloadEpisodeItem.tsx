@@ -14,12 +14,17 @@ type EpisodeItem = {
 
 export const DownloadEpisodeItem: React.FC<EpisodeItem> = observer((props) => {
     const { episodio } = props;
-    const [colore, setColore] = useState<MantineColor>("cyan");
-    const [animate, setAnimate] = useState<boolean>(true);
+    const [colore, setColore] = useState<MantineColor>();
+    const [animate, setAnimate] = useState<boolean>();
 
     useEffect(() => {
         setColore(progressbarHandler(episodio.stato).colore);
         setAnimate(progressbarHandler(episodio.stato).animate);
+        //Non posso aggiornare il componente da fuori
+        //Quindi devo mettere il listerer qui
+        episodio.stream.on("end", () => {
+            setAnimate(false);
+        });
     }, []);
 
     return (
@@ -27,6 +32,7 @@ export const DownloadEpisodeItem: React.FC<EpisodeItem> = observer((props) => {
             <td>Episodio: {episodio.numero}</td>
             <td>
                 <Progressbar
+                    title={episodio.stato}
                     color={colore}
                     percentuale={episodio.percentuale}
                     animate={animate}
@@ -98,6 +104,9 @@ function progressbarHandler(stato: DH_STATES) {
         }
         case DH_STATES.STOPPED: {
             return { colore: "red", animate: false };
+        }
+        case DH_STATES.FINISHED: {
+            return { colore: "cyan", animate: false };
         }
         case DH_STATES.FAILED: {
             return { colore: "violet", animate: false };

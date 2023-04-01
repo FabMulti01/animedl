@@ -45,7 +45,7 @@ export default class AW extends Anime {
         try {
             this.sito = await scraper(this.link);
         } catch (e) {
-            console.warn("Errore nel caricamento della pagina dell'anime: ", e);
+            console.warn("Errore nel caricamento dell'HTML: ", e.message);
         }
     }
 
@@ -61,7 +61,10 @@ export default class AW extends Anime {
                 .children("a")
                 .text();
         } catch (e) {
-            console.warn("Errore nel caricamento dello stato dell'anime: ", e);
+            console.warn(
+                "Errore nel caricamento dello stato dell'anime: ",
+                e.message
+            );
             this.stato = "Non disponibile";
         }
     }
@@ -76,7 +79,7 @@ export default class AW extends Anime {
         } catch (e) {
             console.warn(
                 "Errore nel caricamento della descrizione dell'anime: ",
-                e
+                e.message
             );
             this.descrizione = "Descrizione non disponibile";
         }
@@ -91,7 +94,10 @@ export default class AW extends Anime {
             console.log;
             this.dataInizio = this.sito("dl").children("dd").eq(2).text();
         } catch (e) {
-            console.warn("Errore nel caricamento della data dell'anime: ", e);
+            console.warn(
+                "Errore nel caricamento della data dell'anime: ",
+                e.message
+            );
             this.dataInizio = "Non disponibile";
         }
     }
@@ -106,7 +112,10 @@ export default class AW extends Anime {
                 "data-calendar-date"
             );
         } catch (e) {
-            console.warn("Errore nel recupero della data di rilascio: ", e);
+            console.warn(
+                "Errore nel recupero della data di rilascio: ",
+                e.message
+            );
             this.dataRilascio = "Non disponibile";
         }
     }
@@ -139,7 +148,7 @@ export default class AW extends Anime {
                 );
             }
         } catch (e) {
-            console.warn("Errore: ", e);
+            console.warn("Errore: ", e.message);
         }
     }
 }

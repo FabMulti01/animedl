@@ -7,7 +7,7 @@ import { AnimeStore } from "@/stores/AnimeStore";
 import { constants } from "@/utils";
 
 export const Sidebar = observer(() => {
-    //
+    //Il numerino sotto il tasto download
     const size = AnimeStore.anime.size != undefined ? AnimeStore.anime.size : 0;
 
     return (

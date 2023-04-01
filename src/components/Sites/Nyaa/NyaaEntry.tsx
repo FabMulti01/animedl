@@ -16,8 +16,8 @@ export const NyaaEntry: React.FC<props> = ({ Nyaa, info }) => {
         <tr>
             <td>
                 <Text
-                    style={{ cursor: info ? "" : "pointer" }}
                     lineClamp={1}
+                    style={{ cursor: info ? "" : "pointer" }}
                     onClick={() => {
                         if (!info) {
                             navigate(
@@ -30,7 +30,8 @@ export const NyaaEntry: React.FC<props> = ({ Nyaa, info }) => {
                     }}
                     title={Nyaa.nome}
                 >
-                    {Nyaa.nome}
+                    {/* Il truncate non funziona bene */}
+                    {Nyaa.nome.replaceAll(".", " ")}
                 </Text>
             </td>
             <td>{Nyaa.seeds}</td>
@@ -49,6 +50,7 @@ export const NyaaEntry: React.FC<props> = ({ Nyaa, info }) => {
                     <CopyButton value={Nyaa.magnet}>
                         {({ copied, copy }) => (
                             <Button
+                                title="Copia il magnet"
                                 compact
                                 color={copied ? "green" : "cyan"}
                                 onClick={copy}

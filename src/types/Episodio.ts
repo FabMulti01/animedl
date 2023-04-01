@@ -57,6 +57,7 @@ export default class Episodio {
 
     set stream(stream: DownloaderHelper) {
         this._stream = stream;
+        //Avvio lo stream
         this.downloadStart();
     }
 

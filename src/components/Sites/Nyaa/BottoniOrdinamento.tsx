@@ -1,7 +1,6 @@
 import React from "react";
 import { ORDINE } from "@/types/sites/Nyaa/LoadNyaa";
-import { VscChevronDown } from "react-icons/vsc";
-import { Button, Chip, Group } from "@mantine/core";
+import { Chip } from "@mantine/core";
 
 interface props {
     ordineHandler(ordine: ORDINE);

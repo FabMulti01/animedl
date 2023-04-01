@@ -14,6 +14,18 @@ export const AWInfoMain: React.FC = () => {
     const [nome, link, immagine] = useLocation().state;
     const Anime: AW = usePromise(promise, [nome, link, immagine], 5000);
 
+    if (Anime == undefined) {
+        <>
+            <Title align="center">Errore AnimeWorld</Title>
+            <Text align="center">
+                Errore con il caricamento delle informazioni dell'anime
+            </Text>
+            <Text align="center">
+                Controlla i log per maggiori informazioni <b>CTRL + ALT + I</b>
+            </Text>
+        </>;
+    }
+
     return (
         <>
             <Title align="center">{Anime.nome}</Title>
@@ -28,7 +40,7 @@ export const AWInfoMain: React.FC = () => {
                     <tr>
                         {/* Parte sinistra */}
                         <td style={{ verticalAlign: "top" }}>
-                            <Image src={Anime.immagine} />
+                            <Image radius={"xs"} src={Anime.immagine} />
                             <Space h={25} />
                             <Group>
                                 <Text>Stato: {Anime.stato}</Text>
