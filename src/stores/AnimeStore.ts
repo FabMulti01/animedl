@@ -2,6 +2,7 @@ import { action, makeObservable, observable } from "mobx";
 //Cose mie
 import Episodio from "@/types/Episodio";
 import { EpisodioStore } from "./EpisodioStore";
+import { AnimeDLEvents } from "@/types/AnimeDLEvents";
 
 class AnimeStoreImpl {
     anime = new Map<string, EpisodioStore>();
@@ -18,13 +19,13 @@ class AnimeStoreImpl {
 
     addAnime(episodio: Episodio) {
         if (!this.isAnimeInDownload(episodio.nome)) {
-            this.anime.set(episodio.nome, new EpisodioStore());
+            this.anime.set(episodio.nome, new EpisodioStore(episodio.cartella));
         }
         try {
             this.addEpisodio(episodio);
         } catch (e) {
             this.removeEpisodio(episodio.nome, episodio.id);
-            //AnimeDLEvents.notifica("error", e);
+            AnimeDLEvents.notifica("Errore!", e.message);
         }
     }
 
@@ -33,11 +34,6 @@ class AnimeStoreImpl {
             if (this.anime.get(nome).removeEpisodio(id) === 0) {
                 this.anime.delete(nome);
             }
-        } else {
-            // AnimeDLEvents.notifica(
-            //     "warning",
-            //     "Stai cercando di rimuovere un anime che non é presente nella lista..."
-            // );
         }
     }
 

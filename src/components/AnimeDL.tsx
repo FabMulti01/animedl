@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { AppShell, MantineProvider, Card } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 
 //Utility
 import { Sconosciuto } from "./Menu/Sconosciuto";
@@ -48,6 +49,7 @@ export default function AnimeDL() {
                     </Routes>
                 </AppShell>
             </HashRouter>
+            <Notifications />
         </MantineProvider>
     );
 }

@@ -5,6 +5,7 @@ import { ipcRenderer } from "electron";
 import { AnimeStore } from "./stores/AnimeStore";
 import { getFastExit } from "./types/UserSettings";
 import { DH_STATES } from "node-downloader-helper";
+import { AnimeDLEvents } from "./types/AnimeDLEvents";
 
 export default function ExitCheck() {
     let non_terminati = false;
@@ -29,7 +30,10 @@ export default function ExitCheck() {
             });
             ipcRenderer.invoke("close");
         } else {
-            alert("Arresta o stoppa tutti i download non completati!");
+            AnimeDLEvents.notifica(
+                "Info",
+                "Arresta o stoppa tutti i download non completati!"
+            );
         }
     } else {
         ipcRenderer.invoke("close");

@@ -1,5 +1,6 @@
 import ElectronStore from "electron-store";
 import { constants } from "../utils";
+import { AnimeDLEvents } from "./AnimeDLEvents";
 
 const store = new ElectronStore();
 
@@ -7,7 +8,8 @@ const store = new ElectronStore();
  * Resetta le impostazioni utente
  */
 export function resetSettings() {
-    store.reset();
+    store.clear();
+    AnimeDLEvents.notifica("Info", "Impostazioni utente resettate!");
 }
 /**
  * @returns la versione dell'applicazione
