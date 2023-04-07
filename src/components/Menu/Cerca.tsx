@@ -75,13 +75,13 @@ export const Cerca: React.FC = () => {
                             setNome(e.target.value);
                             setNiente(false);
                         }}
-                        style={{ width: 300 }}
+                        w="300px"
                     />
                     <Select
                         value={site}
                         onChange={siteHandler}
                         data={searchList}
-                        w={"30%"}
+                        w="30%"
                     />
                     <Button type="submit" leftIcon={<VscSearch />}>
                         Cerca
