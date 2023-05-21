@@ -121,30 +121,23 @@ export default class AW extends Anime {
     }
 
     /**
-     * Recupera gli episodi dai bottoni per scaricarli e salva le proprietá
+     * Recupera gli episodi dai bottoni per scaricarli e salva le proprieta
      * @param cheerio la funzione cheerio della pagina dell'anime
      * @returns l'array con tutte le informazioni di ogni episodio dell'anime
      */
     setEpisodi() {
+        //Usata per salvare solo la sezione dell'anime dove sono presenti gli episodi
+        const appoggio = this.sito("div[data-name=9] li[class=episode] a");
         try {
-            console.log();
-            for (
-                let i = 0;
-                i < this.sito("[data-name=9] li[class=episode]").length;
-                i++
-            ) {
-                //Scorre la lista dei numerini e prende il link
+            for (let i = 0; i < appoggio.length; i++) {
+                //Scorre la lista degli episodi e recupera il link piu il numerino
                 // "/play/xxxxx"
                 this.episodio[i] = new Episodio(
                     this.nome,
                     //Link
-                    this.sito("div[data-name=9] li[class=episode] a")
-                        .eq(i)
-                        .attr("href"),
+                    appoggio.eq(i).attr("href"),
                     //Numero
-                    this.sito("div[data-name=9] li[class=episode] a")
-                        .eq(i)
-                        .attr("data-num")
+                    appoggio.eq(i).attr("data-num")
                 );
             }
         } catch (e) {
