@@ -1,12 +1,27 @@
 import React from "react";
 import { Text, Button, Group, Space } from "@mantine/core";
 import type AW from "@/types/sites/AnimeWorld/AnimeWorld";
+import { useDisclosure } from "@mantine/hooks";
+import { ModalConferma } from "./ModalConferma";
+import { AnimeDLEvents } from "@/types/AnimeDLEvents";
 
 interface props {
     Anime: AW;
 }
 
 export const DownloadButtons: React.FC<props> = ({ Anime }) => {
+    const [opened, { open, close }] = useDisclosure(false);
+
+    function downloadHandler() {
+        Anime.episodio.forEach((episodio) => {
+            episodio.addEpisodio();
+        });
+        AnimeDLEvents.notifica(
+            "info",
+            "Tutti gli episodi sono stati messi in download!"
+        );
+    }
+
     return (
         <>
             {Anime.stato == "Non rilasciato" ? (
@@ -18,13 +33,23 @@ export const DownloadButtons: React.FC<props> = ({ Anime }) => {
                 </>
             ) : (
                 <>
+                    <ModalConferma
+                        close={close}
+                        downloadHandler={downloadHandler}
+                        episodi={Anime.episodio.length}
+                        opened={opened}
+                    />
                     <Button.Group>
                         <Button
                             style={{ width: 226 }}
                             onClick={() => {
-                                Anime.episodio.map((episodio) => {
-                                    episodio.addEpisodio();
-                                });
+                                if (Anime.episodio.length > 50) {
+                                    open();
+                                } else {
+                                    Anime.episodio.forEach((episodio) => {
+                                        episodio.addEpisodio();
+                                    });
+                                }
                             }}
                         >
                             Scarica tutto

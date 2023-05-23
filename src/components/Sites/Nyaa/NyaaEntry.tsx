@@ -3,6 +3,7 @@ import { VscCopy, VscMagnet } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import { Button, CopyButton, Text } from "@mantine/core";
 import type Nyaa from "@/types/sites/Nyaa/Nyaa";
+import { AnimeDLEvents } from "@/types/AnimeDLEvents";
 
 interface props {
     Nyaa: Nyaa;
@@ -30,8 +31,8 @@ export const NyaaEntry: React.FC<props> = ({ Nyaa, info }) => {
                     }}
                     title={Nyaa.nome}
                 >
-                    {/* Il truncate non funziona bene */}
-                    {Nyaa.nome.replaceAll(".", " ")}
+                    {/* Il truncate non funziona bene quindi rimuovo i caratteri nella visualizzazione */}
+                    {Nyaa.nome.replaceAll(".", " ").replaceAll("_", " ")}
                 </Text>
             </td>
             <td>{Nyaa.seeds}</td>
@@ -53,7 +54,14 @@ export const NyaaEntry: React.FC<props> = ({ Nyaa, info }) => {
                                 title="Copia il magnet"
                                 compact
                                 color={copied ? "green" : "cyan"}
-                                onClick={copy}
+                                onClick={() => {
+                                    AnimeDLEvents.notifica(
+                                        "info",
+                                        "Magnet Copiato!",
+                                        2000
+                                    );
+                                    copy;
+                                }}
                             >
                                 <VscCopy />
                             </Button>

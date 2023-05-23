@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import { Title, Table } from "@mantine/core";
 import { Cartella } from "./Cartella";
 import { FastExit } from "./FastExit";
 import { Aggiorna } from "./Aggiorna";
 import { ResetSettings } from "./ResetSettings";
 import { Segnala } from "./Segnala";
 import { getDownloadDir, getFastExit } from "@/types/UserSettings";
-import { Title, Table } from "@mantine/core";
 
 export const Settings: React.FC = () => {
     const [Directory, setDirectory] = useState(getDownloadDir());

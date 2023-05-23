@@ -3,9 +3,12 @@ import Nyaa from "./Nyaa";
 import { selettore } from "./Nyaa";
 
 export enum ORDINE {
-    data = "&s=id&o=desc",
-    seed = "&s=seeders&o=desc",
-    peso = "&s=size&o=desc",
+    dataDesc = "&s=id&o=desc",
+    dataAsc = "&s=id&o=asc",
+    seedDesc = "&s=seeders&o=desc",
+    seedAsc = "&s=seeders&o=asc",
+    pesoDesc = "&s=size&o=desc",
+    pesoAsc = "&s=size&o=asc",
 }
 /**
  * Entry point per Nyaa

@@ -55,7 +55,7 @@ export const Sidebar = observer(() => {
                             onClick={() =>
                                 ipcRenderer.invoke(
                                     "apriBrowser",
-                                    constants.HomePage
+                                    constants.Repository
                                 )
                             }
                         >

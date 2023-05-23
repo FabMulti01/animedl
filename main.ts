@@ -99,29 +99,15 @@ ipcMain.handle("checkUpdate", () => {
     autoUpdater.checkForUpdates();
 });
 
+autoUpdater.on("error", (error) => {
+    win.webContents.send("test", error);
+});
+
 //Utility per aggiornamento
 autoUpdater.on("update-available", () => {
-    dialog
-        .showMessageBox({
-            type: "info",
-            title: "Aggiornamento disponibile!",
-            message:
-                "É disponibile un aggiornamento, vuoi aprire la pagina di GitHub?",
-            buttons: ["Si", "No"],
-        })
-        .then((buttonIndex) => {
-            if (buttonIndex) {
-                shell.openPath(
-                    "https://github.com/FabMulti01/animedl/releases"
-                );
-            }
-        });
+    win.webContents.send("updateDisponibile");
 });
 
 autoUpdater.on("update-not-available", () => {
-    dialog.showMessageBox({
-        type: "info",
-        title: "Nessun aggiornamento disponibile",
-        message: "Stai già utilizzando l'ultima versione dell'applicazione!",
-    });
+    win.webContents.send("updateNonDisponibile");
 });

@@ -25,6 +25,7 @@ export default class Nyaa extends Anime {
     ) {
         super(nome, link);
         this.seeds = seeds;
+        //Rimuovo l'orario
         this.data = data.substring(0, 10);
         this.lingua = lingua;
         this.peso = peso;

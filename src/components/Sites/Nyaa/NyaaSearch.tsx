@@ -14,7 +14,7 @@ const promise = (nome: string, lingua: string, ordine: ORDINE) =>
 
 export const NyaaSearch: React.FC = () => {
     const { nome } = useParams();
-    const [ordine, setOrdine] = useState<ORDINE>(ORDINE.data);
+    const [ordine, setOrdine] = useState<ORDINE>(ORDINE.dataDesc);
     const [lingua, setLingua] = useState<string>(selettore.multilingua);
     const Nyaa: Nyaa[] = usePromise(promise, [nome, lingua, ordine], 1000);
     //Ordina la tabella in base ai seed o alla data

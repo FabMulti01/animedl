@@ -1,9 +1,10 @@
 import React from "react";
 import { ORDINE } from "@/types/sites/Nyaa/LoadNyaa";
-import { Chip } from "@mantine/core";
+import { Button } from "@mantine/core";
+import { VscArrowDown, VscArrowUp, VscDash } from "react-icons/vsc";
 
 interface props {
-    ordineHandler(ordine: ORDINE);
+    ordineHandler(ordine: ORDINE): void;
     ordine: ORDINE;
 }
 
@@ -14,31 +15,77 @@ export const BottoniOrdinamento: React.FC<props> = ({
     return (
         <>
             <th style={{ width: "10%" }}>
-                <Chip
-                    variant="filled"
-                    checked={ordine == ORDINE.seed ? true : false}
-                    onChange={() => ordineHandler(ORDINE.seed)}
+                <Button
+                    onClick={() => {
+                        if (ordine == ORDINE.seedDesc) {
+                            ordineHandler(ORDINE.seedAsc);
+                        } else {
+                            ordineHandler(ORDINE.seedDesc);
+                        }
+                    }}
+                    leftIcon={
+                        ordine == ORDINE.seedDesc ? (
+                            <VscArrowDown />
+                        ) : ordine == ORDINE.seedAsc ? (
+                            <VscArrowUp />
+                        ) : (
+                            <VscDash />
+                        )
+                    }
+                    compact
+                    fullWidth
                 >
                     Seed
-                </Chip>
+                </Button>
             </th>
             <th style={{ width: "16%" }}>
-                <Chip
-                    variant="filled"
-                    checked={ordine == ORDINE.data ? true : false}
-                    onChange={() => ordineHandler(ORDINE.data)}
+                <Button
+                    onClick={() => {
+                        if (ordine == ORDINE.dataDesc) {
+                            ordineHandler(ORDINE.dataAsc);
+                        } else {
+                            ordineHandler(ORDINE.dataDesc);
+                        }
+                    }}
+                    leftIcon={
+                        ordine == ORDINE.dataDesc ? (
+                            <VscArrowDown />
+                        ) : ordine == ORDINE.dataAsc ? (
+                            <VscArrowUp />
+                        ) : (
+                            <VscDash />
+                        )
+                    }
+                    compact
+                    fullWidth
                 >
                     Data
-                </Chip>
+                </Button>
             </th>
             <th style={{ width: "14%" }}>
-                <Chip
+                <Button
                     variant="filled"
-                    checked={ordine == ORDINE.peso ? true : false}
-                    onChange={() => ordineHandler(ORDINE.peso)}
+                    onClick={() => {
+                        if (ordine == ORDINE.pesoDesc) {
+                            ordineHandler(ORDINE.pesoAsc);
+                        } else {
+                            ordineHandler(ORDINE.pesoDesc);
+                        }
+                    }}
+                    leftIcon={
+                        ordine == ORDINE.pesoDesc ? (
+                            <VscArrowDown />
+                        ) : ordine == ORDINE.pesoAsc ? (
+                            <VscArrowUp />
+                        ) : (
+                            <VscDash />
+                        )
+                    }
+                    compact
+                    fullWidth
                 >
                     Peso
-                </Chip>
+                </Button>
             </th>
         </>
     );

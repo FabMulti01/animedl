@@ -4,7 +4,7 @@ import json from "../package.json";
 
 export let constants = {
     AppVersion: json.version,
-    HomePage: json.homepage,
+    Repository: json.repository,
     Author: json.author,
     defaultDownloadDir: "",
 };
