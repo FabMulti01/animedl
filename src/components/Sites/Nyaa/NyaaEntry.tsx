@@ -57,10 +57,10 @@ export const NyaaEntry: React.FC<props> = ({ Nyaa, info }) => {
                                 onClick={() => {
                                     AnimeDLEvents.notifica(
                                         "info",
-                                        "Magnet Copiato!",
+                                        "Magnet Copiato nella clipboard!",
                                         2000
                                     );
-                                    copy;
+                                    copy();
                                 }}
                             >
                                 <VscCopy />
