@@ -1,34 +1,33 @@
 import React from "react";
 import { ipcRenderer } from "electron";
 import { Text, Button, Title } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { ModalConferma } from "./ModalConferma";
-import { AnimeDLEvents } from "@/types/AnimeDLEvents";
+
+import { AnimeDL } from "@/types/AnimeDL";
+import { constants } from "@/utils";
 
 export const Aggiorna: React.FC = () => {
-    const [opened, { open, close }] = useDisclosure(false);
-
     ipcRenderer.on("updateDisponibile", () => {
-        open();
+        AnimeDL.conferma(
+            "Aggiorna!",
+            "É disponibile un aggiornamento dell'applicazione. Vuoi aprire la pagina di GitHub?",
+            () => ipcRenderer.invoke("apriBrowser", constants.Repository)
+        );
     });
 
-    ipcRenderer.on("updateNonDisponibile", () => {
-        AnimeDLEvents.notifica(
-            "Info",
-            "Nessun aggiornamento disponibile per l'applicazione!"
-        );
+    ipcRenderer.on("updateInfo", (event, messaggio) => {
+        AnimeDL.notifica("Info", messaggio);
     });
 
     return (
         <>
-            <ModalConferma close={close} opened={opened} />
             <tr>
                 <td>
                     <Title order={3}>Aggiorna</Title>
                     <Text>
                         Controlla se ci sono aggiornamenti disponibili per
-                        l'appicazione, se si chiude l'applicazione durante
-                        l'aggiornamento bisogna re-iniziare a scaricarlo da zero
+                        l'applicazione. In caso siano presenti viene aperto un
+                        messaggio di pop-up per aprire la pagina delle release
+                        di GitHub
                     </Text>
                 </td>
                 <td>

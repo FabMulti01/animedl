@@ -108,6 +108,10 @@ autoUpdater.on("update-available", () => {
     win.webContents.send("updateDisponibile");
 });
 
+autoUpdater.on("checking-for-update", () => {
+    win.webContents.send("updateInfo", "Controllo se ci sono aggiornamenti...");
+});
+
 autoUpdater.on("update-not-available", () => {
-    win.webContents.send("updateNonDisponibile");
+    win.webContents.send("updateInfo", "Nessun aggiornamento disponibile!");
 });
