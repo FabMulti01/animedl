@@ -3,20 +3,21 @@ import { useParams } from "react-router-dom";
 import usePromise from "react-promise-suspense";
 import { Table, Title, Text } from "@mantine/core";
 import type Nyaa from "@/types/sites/Nyaa/Nyaa";
-import { loadNyaa, ORDINE } from "@/types/sites/Nyaa/LoadNyaa";
+import { ORDINE, loadNyaa } from "@/types/sites/Nyaa/LoadNyaa";
 import { NyaaEntry } from "./NyaaEntry";
 import { BottoniOrdinamento } from "./BottoniOrdinamento";
 import { BottoniLingua } from "./BottoniLingua";
 import { selettore } from "@/types/sites/Nyaa/Nyaa";
 
-const promise = (nome: string, lingua: string, ordine: ORDINE) =>
-    loadNyaa(nome, lingua, ordine);
+const promise = (nome: string, lingua: string, ordine: ORDINE) => {
+    return loadNyaa(nome, lingua, ordine);
+};
 
 export const NyaaSearch: React.FC = () => {
     const { nome } = useParams();
     const [ordine, setOrdine] = useState<ORDINE>(ORDINE.dataDesc);
     const [lingua, setLingua] = useState<string>(selettore.multilingua);
-    const Nyaa: Nyaa[] = usePromise(promise, [nome, lingua, ordine], 1000);
+    const Nyaa: Nyaa[] = usePromise(promise, [nome, lingua, ordine], 500);
     //Ordina la tabella in base ai seed o alla data
     function ordineHandler(scelta: ORDINE) {
         if (ordine != scelta) {

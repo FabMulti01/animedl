@@ -1,19 +1,22 @@
 //Entry nella lista download
 import { observer } from "mobx-react";
 import React, { useEffect, useState } from "react";
-import type Episodio from "@/types/Episodio";
-import * as Bottone from "./BottoniDownload";
-import { Progressbar } from "./Progressbar";
+import * as Bottone from "@/components/Download/BottoniDownload/BottoniDownload";
+import { Progressbar } from "../Progressbar";
 import { Text, Button } from "@mantine/core";
 import { Group, MantineColor } from "@mantine/core";
 import { DH_STATES } from "node-downloader-helper";
+import { formatBytes } from "@/utils";
+import Episodio from "@/types/Episodio";
 
 type EpisodeItem = {
     episodio: Episodio;
+    nome: string;
+    cartella: string;
 };
 
 export const DownloadEpisodeItem: React.FC<EpisodeItem> = observer((props) => {
-    const { episodio } = props;
+    const { episodio, nome, cartella } = props;
     const [colore, setColore] = useState<MantineColor>();
     const [animate, setAnimate] = useState<boolean>();
 
@@ -38,11 +41,21 @@ export const DownloadEpisodeItem: React.FC<EpisodeItem> = observer((props) => {
                     animate={animate}
                 />
                 <Group>
-                    <Text>Peso: {episodio.pesoTotale}</Text>
-                    <Text>
-                        {/* Se il download é terminato/stoppato non mostro la velocita */}
-                        {episodio.velocita != "NaN/S" ? episodio.velocita : ""}
+                    <Text w={"30%"}>
+                        Peso: {formatBytes(episodio.pesoTotale)}
                     </Text>
+                    {episodio.velocita != 0 ? (
+                        <>
+                            <Text w={"30%"}>
+                                Scaricato: {formatBytes(episodio.scaricato, 0)}
+                            </Text>
+                            <Text w={"30%"}>
+                                {formatBytes(episodio.velocita) + "/S"}
+                            </Text>
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </Group>
             </td>
             <td>
@@ -53,13 +66,17 @@ export const DownloadEpisodeItem: React.FC<EpisodeItem> = observer((props) => {
                         //Se e completato mi mette il bottone per aprire la cartella
                         episodio.stato === DH_STATES.FINISHED ? (
                             <>
-                                <Bottone.Cartella
-                                    cartella={episodio.cartella}
+                                <Bottone.Cartella cartella={cartella} />
+                                <Bottone.Rimuovi
+                                    nome={nome}
+                                    numero={episodio.numero}
                                 />
-                                <Bottone.Rimuovi episodio={episodio} />
                             </>
                         ) : (
-                            <Bottone.Rimuovi episodio={episodio} />
+                            <Bottone.Rimuovi
+                                nome={nome}
+                                numero={episodio.numero}
+                            />
                         )
                     ) : episodio.stato === DH_STATES.PAUSED ? (
                         <>

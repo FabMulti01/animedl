@@ -1,25 +1,19 @@
 import React from "react";
 import { Text, Button, Group, Space } from "@mantine/core";
 import type AW from "@/types/sites/AnimeWorld/AnimeWorld";
-import { useDisclosure } from "@mantine/hooks";
-import { ModalConferma } from "./ModalConferma";
-import { AnimeDLEvents } from "@/types/AnimeDLEvents";
+import { AnimeDL } from "@/types/AnimeDL";
+import { AnimeStore } from "@/stores/AnimeStore";
 
 interface props {
     Anime: AW;
 }
 
 export const DownloadButtons: React.FC<props> = ({ Anime }) => {
-    const [opened, { open, close }] = useDisclosure(false);
-
+    //Aggiunge tutti gli episodi in lista
     function downloadHandler() {
         Anime.episodio.forEach((episodio) => {
-            episodio.addEpisodio();
+            AnimeStore.addEpisodio(Anime.nome, Anime.cartella, episodio);
         });
-        AnimeDLEvents.notifica(
-            "info",
-            "Tutti gli episodi sono stati messi in download!"
-        );
     }
 
     return (
@@ -33,22 +27,21 @@ export const DownloadButtons: React.FC<props> = ({ Anime }) => {
                 </>
             ) : (
                 <>
-                    <ModalConferma
-                        close={close}
-                        downloadHandler={downloadHandler}
-                        episodi={Anime.episodio.length}
-                        opened={opened}
-                    />
                     <Button.Group>
                         <Button
                             style={{ width: 226 }}
                             onClick={() => {
-                                if (Anime.episodio.length > 50) {
-                                    open();
+                                if (Anime.episodio.size > 50) {
+                                    AnimeDL.conferma(
+                                        "Attenzione!",
+                                        "Stai cercando di scaricare " +
+                                            Anime.episodio.size +
+                                            " episodi! Continuando l'applicazione potrebbe diventare instabile, sei sicuro?",
+                                        () => downloadHandler(),
+                                        "Continua"
+                                    );
                                 } else {
-                                    Anime.episodio.forEach((episodio) => {
-                                        episodio.addEpisodio();
-                                    });
+                                    downloadHandler();
                                 }
                             }}
                         >
@@ -58,7 +51,13 @@ export const DownloadButtons: React.FC<props> = ({ Anime }) => {
                             <Button
                                 style={{ width: 226 }}
                                 onClick={() => {
-                                    Anime.episodio.at(-1).addEpisodio();
+                                    AnimeStore.addEpisodio(
+                                        Anime.nome,
+                                        Anime.cartella,
+                                        Anime.episodio.get(
+                                            Anime.episodio.size.toString()
+                                        )
+                                    );
                                 }}
                             >
                                 Scarica ultimo episodio
@@ -69,14 +68,18 @@ export const DownloadButtons: React.FC<props> = ({ Anime }) => {
                     </Button.Group>
                     <Space h={15} />
                     <Group>
-                        {Anime.episodio.map((episodio, i) => {
+                        {Array.from(Anime.episodio.values()).map((episodio) => {
                             return (
                                 <Button
                                     style={{ width: 140 }}
                                     onClick={() => {
-                                        episodio.addEpisodio();
+                                        AnimeStore.addEpisodio(
+                                            episodio.nome,
+                                            Anime.cartella,
+                                            episodio
+                                        );
                                     }}
-                                    key={i}
+                                    key={episodio.numero}
                                 >
                                     Episodio {episodio.numero}
                                 </Button>

@@ -3,7 +3,7 @@ import { VscCopy, VscMagnet } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import { Button, CopyButton, Text } from "@mantine/core";
 import type Nyaa from "@/types/sites/Nyaa/Nyaa";
-import { AnimeDLEvents } from "@/types/AnimeDLEvents";
+import { AnimeDL } from "@/types/AnimeDL";
 
 interface props {
     Nyaa: Nyaa;
@@ -45,6 +45,13 @@ export const NyaaEntry: React.FC<props> = ({ Nyaa, info }) => {
                         compact
                         title="Apri il magnet"
                         href={Nyaa.magnet}
+                        onClick={() => {
+                            AnimeDL.notifica(
+                                "Info",
+                                "Apro il magnet nell'applicazione che li supporta!",
+                                2000
+                            );
+                        }}
                     >
                         <VscMagnet />
                     </Button>
@@ -55,8 +62,8 @@ export const NyaaEntry: React.FC<props> = ({ Nyaa, info }) => {
                                 compact
                                 color={copied ? "green" : "cyan"}
                                 onClick={() => {
-                                    AnimeDLEvents.notifica(
-                                        "info",
+                                    AnimeDL.notifica(
+                                        "Info",
                                         "Magnet Copiato nella clipboard!",
                                         2000
                                     );

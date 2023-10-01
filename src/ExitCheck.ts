@@ -5,8 +5,13 @@ import { ipcRenderer } from "electron";
 import { AnimeStore } from "./stores/AnimeStore";
 import { getFastExit } from "./types/UserSettings";
 import { DH_STATES } from "node-downloader-helper";
-import { AnimeDLEvents } from "./types/AnimeDLEvents";
+import { AnimeDL } from "./types/AnimeDL";
 
+/**
+ * Controlla che nella lista non siano presenti download attivi
+ * Se l'impostazione "Uscita rapida" é abilitata, allora verranno stoppati tutti i download attivi automaticamente
+ * Se l'impostazione "Uscita rapida" é disabilitata, viene mostrato un modal con un messaggio
+ */
 export default function ExitCheck() {
     let non_terminati = false;
 
@@ -30,9 +35,9 @@ export default function ExitCheck() {
             });
             ipcRenderer.invoke("close");
         } else {
-            AnimeDLEvents.notifica(
-                "Info",
-                "Arresta o stoppa tutti i download non completati!"
+            AnimeDL.info(
+                "Attenzione!",
+                "Ferma tutti i download non completati!"
             );
         }
     } else {

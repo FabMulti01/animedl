@@ -26,7 +26,7 @@ export const Cartella: React.FC<props> = ({ setDirectory, Directory }) => {
                 <Title order={3}>Cartella di download</Title>
                 <TextInput
                     readOnly
-                    onDoubleClick={() => directoryHandler()}
+                    onDoubleClick={directoryHandler}
                     value={Directory}
                     title={Directory}
                 />
@@ -37,9 +37,10 @@ export const Cartella: React.FC<props> = ({ setDirectory, Directory }) => {
             </td>
             <td>
                 <Button
+                    top={6}
                     fullWidth
                     leftIcon={<VscFolderOpened />}
-                    onClick={() => directoryHandler()}
+                    onClick={directoryHandler}
                 >
                     Sfoglia...
                 </Button>

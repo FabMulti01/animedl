@@ -1,6 +1,6 @@
 import { scraper } from "@/types/Scraper";
 import Anime from "@/types/Anime";
-import Episodio from "@/types/Episodio";
+import AWEpisodio from "./EpisodioAW";
 
 export default class AW extends Anime {
     /**
@@ -24,7 +24,7 @@ export default class AW extends Anime {
     set stato(stato: string) {
         this._stato = stato;
         if (stato == "In corso") {
-            this.setDataRilascio();
+            this.getDataRilascio();
         }
     }
 
@@ -53,7 +53,7 @@ export default class AW extends Anime {
      * Recupera lo stato dell'anime (finito, in corso, ecc.)
      * @returns lo stato dell'anime
      */
-    setStato() {
+    getStato() {
         try {
             this.stato = this.sito("dl")
                 .children("dd")
@@ -73,7 +73,7 @@ export default class AW extends Anime {
      * Recupera la descrizione dalla pagina dell'anime
      * @returns la descrizione dell'anime
      */
-    setDescrizione() {
+    getDescrizione() {
         try {
             this.descrizione = this.sito("div[class=desc]").text();
         } catch (e) {
@@ -89,7 +89,7 @@ export default class AW extends Anime {
      * Recupera la data d'inizio dell'anime dalla tabellina di AnimeWorld
      * @returns la data di inizio dell'anime
      */
-    setDataUscita() {
+    getDataUscita() {
         try {
             console.log;
             this.dataInizio = this.sito("dl").children("dd").eq(2).text();
@@ -106,7 +106,7 @@ export default class AW extends Anime {
      * Recupera la data di rilascio dalla pagina dell'anime
      * @returns la data di rilascio
      */
-    setDataRilascio() {
+    getDataRilascio() {
         try {
             this.dataRilascio = this.sito('div[id="next-episode"]').attr(
                 "data-calendar-date"
@@ -125,23 +125,40 @@ export default class AW extends Anime {
      * @param cheerio la funzione cheerio della pagina dell'anime
      * @returns l'array con tutte le informazioni di ogni episodio dell'anime
      */
-    setEpisodi() {
+    getEpisodi() {
         //Usata per salvare solo la sezione dell'anime dove sono presenti gli episodi
-        const appoggio = this.sito("div[data-name=9] li[class=episode] a");
+        const sito = this.sito("div[data-name=9] li[class=episode] a");
         try {
-            for (let i = 0; i < appoggio.length; i++) {
+            for (let i = 0; i < sito.length; i++) {
                 //Scorre la lista degli episodi e recupera il link piu il numerino
                 // "/play/xxxxx"
-                this.episodio[i] = new Episodio(
-                    this.nome,
-                    //Link
-                    appoggio.eq(i).attr("href"),
-                    //Numero
-                    appoggio.eq(i).attr("data-num")
+                this.episodio.set(
+                    sito.eq(i).attr("data-num"),
+                    new AWEpisodio(
+                        //Nome
+                        this.nome,
+                        //Link
+                        sito.eq(i).attr("href"),
+                        //Numero
+                        sito.eq(i).attr("data-num")
+                    )
                 );
             }
         } catch (e) {
             console.warn("Errore: ", e.message);
         }
+    }
+
+    async loadInfo(): Promise<this> {
+        try {
+            await this.setSito();
+        } catch (e) {
+            return undefined;
+        }
+        this.getEpisodi();
+        this.getStato();
+        this.getDescrizione();
+        this.getDataUscita();
+        return this;
     }
 }

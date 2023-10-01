@@ -1,4 +1,4 @@
-import { Iviews } from "../Views";
+import { page } from "../Pages";
 
 //AnimeWorld
 import { AWSearch } from "@/components/Sites/AnimeWorld/AWSearch";
@@ -15,7 +15,7 @@ import { NyaaInfo } from "@/components/Sites/Nyaa/NyaaInfo";
 //Usare sempre "<nomesito>Search" per permettere al router di funzionare correttamente
 //Alt name viene utilizzato in caso il nome é diverso da quello usato nel path
 //Il nome é utilizzato in base alla pagina, per la pagina delle info lasicare Info
-export const AnimeSites: Iviews[] = [
+export const Sites: page[] = [
     {
         path: "AWSearch/:nome",
         nome: "AnimeWorld",
@@ -40,6 +40,7 @@ export const AnimeSites: Iviews[] = [
         component: NyaaInfo,
         altNome: "Nyaa",
     },
+    //Non é ancora finito il sito
     // {
     //     path: "WORSearch/:nome",
     //     nome: "Winds of Re:Sub",

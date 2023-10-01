@@ -7,15 +7,19 @@ import AW from "./AnimeWorld";
  * @returns l'array con tutti gli anime trovati
  */
 export async function loadAW(nome: string): Promise<AW[]> {
-    let cheerio = null;
+    let cheerio: cheerio.Root = null;
     const ANIMESEARCH = "https://www.animeworld.tv/search?keyword=";
     try {
-        cheerio = await scraper(ANIMESEARCH + nome);
+        cheerio = await scraper(ANIMESEARCH + encodeURIComponent(nome));
     } catch (e) {
         return;
     }
     const anime: AW[] = [];
-    for (let i = 0; i < cheerio("div[class=inner] a[class=name]").length; i++) {
+    for (
+        var i = 0;
+        i < cheerio("div[class=item] div[class=inner]").length;
+        i++
+    ) {
         anime[i] = new AW(
             getNome(i, cheerio),
             getLink(i, cheerio),

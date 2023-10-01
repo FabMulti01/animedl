@@ -18,10 +18,7 @@ export const ResetSettings: React.FC<props> = ({ setDirectory, setFast }) => {
         <tr>
             <td>
                 <Title order={3}>Resetta impostazioni</Title>
-                <Text>
-                    Se si clicca il bottone le impostazioni torneranno a quelle
-                    base
-                </Text>
+                <Text>Resetta le impostazioni a quelle di default</Text>
             </td>
             <td>
                 <Button

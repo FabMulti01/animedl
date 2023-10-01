@@ -7,8 +7,9 @@ import cheerio from "cheerio";
  */
 export async function scraper(link: string): Promise<cheerio.Root> {
     return new Promise((resolve, reject) => {
-        fetch(encodeURI(link), {
+        fetch(link, {
             method: "GET",
+            credentials: "omit",
         })
             .then((response) => {
                 if (response.status != 200) {
@@ -20,7 +21,7 @@ export async function scraper(link: string): Promise<cheerio.Root> {
                 }
             })
             .catch((e) => {
-                console.log("Errore nello scraper", e);
+                console.log("Errore nello scraper: ", e);
                 reject(null);
             });
     });

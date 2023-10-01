@@ -1,6 +1,6 @@
 import ElectronStore from "electron-store";
 import { constants } from "../utils";
-import { AnimeDLEvents } from "./AnimeDLEvents";
+import { AnimeDL } from "./AnimeDL";
 
 const store = new ElectronStore();
 
@@ -9,7 +9,7 @@ const store = new ElectronStore();
  */
 export function resetSettings() {
     store.clear();
-    AnimeDLEvents.notifica("Info", "Impostazioni utente resettate!");
+    AnimeDL.notifica("Info", "Impostazioni utente resettate!", 5000, "yellow");
 }
 /**
  * @returns la versione dell'applicazione
@@ -68,9 +68,17 @@ export function setLastUsedSite(lastUsedSite: string) {
     }
 }
 /**
- * @returns La string dell'ultimo sito utilizzato
+ * @returns La stringa dell'ultimo sito utilizzato
  */
 export function getLastUsedSite(): string {
     //0 é AnimeWorld
     return store.get("lastUsedSite", "AnimeWorld") as string;
+}
+
+export function setTotaleScaricato(pesoTotale: number) {
+    store.set("totaleScaricato", getTotaleScaricato() + pesoTotale);
+}
+
+export function getTotaleScaricato(): number {
+    return store.get("totaleScaricato", 0) as number;
 }

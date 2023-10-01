@@ -1,30 +1,18 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import usePromise from "react-promise-suspense";
 import { Table, Title, Text, Paper } from "@mantine/core";
-import type Nyaa from "@/types/sites/Nyaa/Nyaa";
+import Nyaa from "@/types/sites/Nyaa/Nyaa";
 import { NyaaEntry } from "./NyaaEntry";
-import { InfoNyaa } from "@/types/sites/Nyaa/InfoNyaa";
+import usePromise from "react-promise-suspense";
+//import { InfoNyaa } from "@/types/sites/Nyaa/InfoNyaa";
 
-const promise = (
-    nome: string,
-    data: string,
-    link: string,
-    seeds: string,
-    peso: string,
-    lingua: string,
-    magnet: string
-) => InfoNyaa(nome, data, link, seeds, peso, lingua, magnet);
+const promise = (Anime: Nyaa) => {
+    const { nome, link, seeds, data, lingua, peso, magnet } = Anime;
+    return new Nyaa(nome, link, seeds, data, lingua, peso, magnet).loadInfo();
+};
 
 export const NyaaInfo: React.FC = () => {
-    const { nome, data, link, seeds, peso, lingua, magnet } =
-        useLocation().state;
-    //Se va in errore il recupero della descrizione non fa nulla
-    const Nyaa: Nyaa = usePromise(
-        promise,
-        [nome, data, link, seeds, peso, lingua, magnet],
-        5000
-    );
+    const Nyaa: Nyaa = usePromise(promise, [useLocation().state], 1000);
 
     return (
         <>

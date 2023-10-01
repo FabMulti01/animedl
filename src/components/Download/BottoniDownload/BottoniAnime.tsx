@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@mantine/core";
 import { EpisodioStore } from "@/stores/EpisodioStore";
+import { AnimeStore } from "@/stores/AnimeStore";
 import { DH_STATES } from "node-downloader-helper";
 import {
     VscDebugPause,
@@ -12,17 +13,17 @@ import {
 import { ipcRenderer } from "electron";
 
 type props = {
-    anime: EpisodioStore;
+    Anime: EpisodioStore;
 };
 
-export const BottoniAnime: React.FC<props> = ({ anime }) => {
-    if (anime.inDownload > 0) {
+export const BottoniAnime: React.FC<props> = ({ Anime }) => {
+    if (Anime.inDownload > 0) {
         return (
             <>
                 <Button
                     title="Pausa tutti i download in corso"
                     onClick={() =>
-                        anime.episodio.forEach((episodio) => {
+                        Anime.episodio.forEach((episodio) => {
                             if (episodio.stato == DH_STATES.DOWNLOADING) {
                                 episodio.stream.pause();
                             }
@@ -34,7 +35,7 @@ export const BottoniAnime: React.FC<props> = ({ anime }) => {
                 <Button
                     title="Riprende tutti i download in pausa"
                     onClick={() => {
-                        anime.episodio.forEach((episodio) => {
+                        Anime.episodio.forEach((episodio) => {
                             if (episodio.stato == DH_STATES.PAUSED) {
                                 episodio.stream.resume();
                             }
@@ -51,16 +52,19 @@ export const BottoniAnime: React.FC<props> = ({ anime }) => {
                 <Button
                     title="Apri la cartella dell'anime"
                     onClick={() =>
-                        ipcRenderer.invoke("openDir", anime.cartella)
+                        ipcRenderer.invoke("openDir", Anime.cartella)
                     }
                 >
                     <VscFolderOpened />
                 </Button>
                 <Button
-                    title="Rimuovi tutti gli episodi"
+                    title="Rimuovi dalla lista"
                     onClick={() => {
-                        anime.episodio.forEach((episodio) => {
-                            episodio.removeEpisodio();
+                        Anime.episodio.forEach((episodio) => {
+                            AnimeStore.removeEpisodio(
+                                episodio.nome,
+                                episodio.numero
+                            );
                         });
                     }}
                 >

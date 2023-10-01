@@ -14,8 +14,10 @@ export const FastExit: React.FC<props> = ({ setFast, Fast }) => {
             <td>
                 <Title order={3}>Uscita rapida</Title>
                 <Text>
-                    Se é attivata, non viene mostrato un alert quando ci sono
-                    episodi ancora in download
+                    Se é disattivata, viene mostrato un pop up quando ci sono
+                    episodi ancora in download per evitare di perderne il
+                    progresso. Se viene attivata gli episodi ancora in download
+                    verranno stoppati automaticamente, eliminando il file
                 </Text>
             </td>
             <td>

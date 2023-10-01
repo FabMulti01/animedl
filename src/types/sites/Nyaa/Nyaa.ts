@@ -1,4 +1,6 @@
 import Anime from "@/types/Anime";
+import { scraper } from "@/types/Scraper";
+import MarkdownIt from "markdown-it";
 
 export enum selettore {
     italiano = "italiano",
@@ -30,5 +32,22 @@ export default class Nyaa extends Anime {
         this.lingua = lingua;
         this.peso = peso;
         this.magnet = magnet;
+    }
+
+    async loadInfo(): Promise<this> {
+        try {
+            this.sito = await scraper(this.link);
+            this.descrizione = MarkdownIt().render(
+                this.sito("#torrent-description").html()
+            );
+        } catch (e) {
+            console.warn(
+                "Errore nel caricamento della descrizione: ",
+                e.message
+            );
+            this.descrizione =
+                "Descrizione non disponibile. Controlla i log per maggiori informazioni!";
+        }
+        return this;
     }
 }

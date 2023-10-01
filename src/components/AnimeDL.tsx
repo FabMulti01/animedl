@@ -2,19 +2,18 @@ import { Suspense } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { AppShell, MantineProvider, Card } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
+import { ModalsProvider } from "@mantine/modals";
 
 //Utility
 import { Sconosciuto } from "./Menu/Sconosciuto";
 
 //Pagine dei siti
 import { Sidebar } from "./Menu/Sidebar";
-import { loadViews } from "@/types/Views";
+import { loadPages } from "@/types/Pages";
 import { Caricamento } from "./Menu/Caricamento";
 import { Titlebar } from "./Menu/Titlebar";
 
 export default function AnimeDL() {
-    const views = loadViews();
-
     return (
         <MantineProvider
             theme={{
@@ -26,28 +25,30 @@ export default function AnimeDL() {
             withNormalizeCSS
         >
             <HashRouter>
-                <AppShell navbar={<Sidebar />} header={<Titlebar />}>
-                    <Routes>
-                        {views.map((view, index) => {
-                            return (
-                                <Route
-                                    key={index}
-                                    path={view.path}
-                                    element={
-                                        <Card withBorder h={"100%"}>
-                                            <Suspense
-                                                fallback={<Caricamento />}
-                                            >
-                                                <view.component />
-                                            </Suspense>
-                                        </Card>
-                                    }
-                                />
-                            );
-                        })}
-                        <Route path="*" element={<Sconosciuto />} />
-                    </Routes>
-                </AppShell>
+                <ModalsProvider>
+                    <AppShell navbar={<Sidebar />} header={<Titlebar />}>
+                        <Routes>
+                            {loadPages().map((Page, index) => {
+                                return (
+                                    <Route
+                                        key={index}
+                                        path={Page.path}
+                                        element={
+                                            <Card withBorder h={"100%"}>
+                                                <Suspense
+                                                    fallback={<Caricamento />}
+                                                >
+                                                    <Page.component />
+                                                </Suspense>
+                                            </Card>
+                                        }
+                                    />
+                                );
+                            })}
+                            <Route path="*" element={<Sconosciuto />} />
+                        </Routes>
+                    </AppShell>
+                </ModalsProvider>
             </HashRouter>
             <Notifications />
         </MantineProvider>

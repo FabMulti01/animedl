@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AnimeSites } from "@/types/sites/SiteList";
-import { getLastUsedSite, setLastUsedSite } from "@/types/UserSettings";
 import { Button, TextInput, Group, Title, Stack, Select } from "@mantine/core";
 import { VscSearch } from "react-icons/vsc";
+import { Sites } from "@/types/sites/Sites";
+import { getLastUsedSite, setLastUsedSite } from "@/types/UserSettings";
 
 export const Cerca: React.FC = () => {
     const navigate = useNavigate();
 
     //Nome dell'anime da cercare
     const [nome, setNome] = useState<string>("");
-    //Appoggio in caso non viene cercato nulla
+    //Costante di appoggio in caso non viene cercato nulla
     const [niente, setNiente] = useState<boolean>(false);
     //La lista dei siti per la ricerca
     const [searchList, setSearchList] = useState<string[]>([""]);
@@ -18,9 +18,13 @@ export const Cerca: React.FC = () => {
     const [site, setSite] = useState<string>("");
 
     useEffect(() => {
+        //Imposto l'ultimo sito utilizzato nella ricerca
         setSite(getLastUsedSite());
+        /**
+         * Array di appoggio per le pagine di ricerca
+         */
         let appoggio: string[] = [];
-        AnimeSites.map((sito) => {
+        Sites.map((sito) => {
             if (sito.path.includes("Search")) {
                 appoggio.push(sito.nome);
             }
@@ -36,7 +40,7 @@ export const Cerca: React.FC = () => {
             //Navigazione dinamica
             navigate(
                 "/" +
-                    AnimeSites.find((value) => {
+                    Sites.find((value) => {
                         if (value.nome == site) {
                             return true;
                         }
@@ -50,6 +54,10 @@ export const Cerca: React.FC = () => {
         }
     }
 
+    /**
+     * Imposta il sito sulla quale eseguire la ricerca e lo salva nelle impostazioni utente
+     * @param site il sito da utilizzare, é l'ALT name dei siti
+     */
     function siteHandler(site: string) {
         if (searchList.includes(site)) {
             setLastUsedSite(searchList.at(searchList.indexOf(site)));
@@ -68,14 +76,14 @@ export const Cerca: React.FC = () => {
             >
                 <Group spacing={"xs"}>
                     <TextInput
-                        error={niente ? "Non stai cercando nulla" : ""}
+                        error={niente ? "Non stai cercando nulla!" : ""}
                         autoFocus
                         placeholder="Inserisci il nome dell'anime..."
                         onChange={(e) => {
                             setNome(e.target.value);
                             setNiente(false);
                         }}
-                        w="300px"
+                        w="350px"
                     />
                     <Select
                         value={site}

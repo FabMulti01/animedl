@@ -1,13 +1,13 @@
 //La lista di tutte le routes
 //Per i siti viene creata dinamicamente tramite "sito"
 
-import { AnimeSites } from "./sites/SiteList";
+import { Sites } from "./sites/Sites";
 import { DownloadList } from "@/components/Download/DownloadList";
 import { Cerca } from "@/components/Menu/Cerca";
 import { Settings } from "@/components/Menu/Impostazioni/Impostazioni";
-import { DownloadAnimePage } from "@/components/Download/DownloadAnimePage";
+import { DownloadAnimePage } from "@/components/Download/DownloadInfo/DownloadAnimeInfo";
 
-export type Iviews = {
+export type page = {
     /**
      * Il path utilizzato per il router
      */
@@ -31,8 +31,8 @@ export type Iviews = {
     exact?: boolean;
 };
 
-export function loadViews(): Iviews[] {
-    let views: Iviews[] = [
+export function loadPages(): page[] {
+    let page: page[] = [
         {
             path: "/",
             nome: "Cerca",
@@ -56,8 +56,6 @@ export function loadViews(): Iviews[] {
         },
     ];
     //Vengono aggiunte le routes per i siti
-    AnimeSites.map((sito) => {
-        views.push(sito);
-    });
-    return views;
+    page = page.concat(Sites);
+    return page;
 }

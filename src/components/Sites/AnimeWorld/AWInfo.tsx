@@ -1,18 +1,16 @@
 import React from "react";
 import usePromise from "react-promise-suspense";
 import { DownloadButtons } from "./DownloadButtons";
-import type AW from "@/types/sites/AnimeWorld/AnimeWorld";
-import { InfoAW } from "@/types/sites/AnimeWorld/InfoAW";
+import AW from "@/types/sites/AnimeWorld/AnimeWorld";
 import { useLocation } from "react-router-dom";
 import { Title, Table, Text, Image, Group, Space } from "@mantine/core";
 
-const promise = (nome: string, link: string, immagine: string) => {
-    return InfoAW(nome, link, immagine);
+const promise = (Anime: AW) => {
+    return new AW(Anime.nome, Anime.link, Anime.immagine).loadInfo();
 };
 
 export const AWInfoMain: React.FC = () => {
-    const [nome, link, immagine] = useLocation().state;
-    const Anime: AW = usePromise(promise, [nome, link, immagine], 5000);
+    const Anime = usePromise(promise, [useLocation().state], 1000);
 
     if (Anime == undefined) {
         <>
@@ -47,8 +45,8 @@ export const AWInfoMain: React.FC = () => {
                                 <Text>Data di uscita: {Anime.dataInizio}</Text>
                                 <Text>
                                     Episodi totali:{" "}
-                                    {Anime.episodio.length != 0
-                                        ? Anime.episodio.length
+                                    {Anime.episodio.size != 0
+                                        ? Anime.episodio.size
                                         : "Non disponibile"}
                                 </Text>
                                 {Anime.dataRilascio ? (

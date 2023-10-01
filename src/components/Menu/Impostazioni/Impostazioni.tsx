@@ -6,6 +6,7 @@ import { Aggiorna } from "./Aggiorna";
 import { ResetSettings } from "./ResetSettings";
 import { Segnala } from "./Segnala";
 import { getDownloadDir, getFastExit } from "@/types/UserSettings";
+import { TotaleScaricato } from "./TotaleScaricato";
 
 export const Settings: React.FC = () => {
     const [Directory, setDirectory] = useState(getDownloadDir());
@@ -39,6 +40,7 @@ export const Settings: React.FC = () => {
                     />
                     {/* Feedback */}
                     <Segnala />
+                    <TotaleScaricato />
                 </tbody>
                 <caption>
                     Le impostazioni utente vengono salvate automaticamente

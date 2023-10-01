@@ -1,21 +1,21 @@
-import { observer } from "mobx-react";
 import React from "react";
+import { observer } from "mobx-react";
 import { VscChevronRight } from "react-icons/vsc";
 import { EpisodioStore } from "@/stores/EpisodioStore";
 import { useNavigate } from "react-router-dom";
 import { Progress, Flex, Text, Button } from "@mantine/core";
-import { BottoniAnime } from "./BottoniAnime";
+import { BottoniAnime } from "./BottoniDownload/BottoniAnime";
+import { formatBytes } from "@/utils";
 
-type props = {
-    anime: EpisodioStore;
+/**
+ * Entry per l'anime nella lista download
+ */
+export const DownloadAnimeItem: React.FC<{
+    Anime: EpisodioStore;
     nome: string;
-};
-
-export const DownloadAnimeItem: React.FC<props> = observer((props) => {
+}> = observer((props) => {
     const navigate = useNavigate();
-    const { anime } = props;
-    const { nome } = props;
-
+    const { Anime, nome } = props;
     return (
         <tr>
             <td>
@@ -26,16 +26,19 @@ export const DownloadAnimeItem: React.FC<props> = observer((props) => {
             <td>
                 <Flex direction={"column"}>
                     <Progress
-                        title={anime.inDownload.toString() + " in download"}
+                        title={Anime.inDownload.toString() + " in download"}
                         size={"xl"}
-                        animate={anime.inDownload > 0 ? true : false}
-                        value={Number.parseFloat(anime.percentualeMedia)}
+                        animate={Anime.inDownload > 0 ? true : false}
+                        value={Number.parseFloat(Anime.percentualeMedia)}
                     />
                 </Flex>
             </td>
             <td>
+                <Text>{formatBytes(Anime.pesoTotale)}</Text>
+            </td>
+            <td>
                 <Button.Group>
-                    <BottoniAnime anime={anime} />
+                    <BottoniAnime Anime={Anime} />
                     <Button
                         title="Info Download"
                         onClick={() =>

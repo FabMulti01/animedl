@@ -1,14 +1,19 @@
-import { Container, Text } from "@mantine/core";
+import { Card, Stack, Code, Text, Title } from "@mantine/core";
 import React from "react";
 import { useLocation } from "react-router-dom";
 
 export const Sconosciuto: React.FC = () => {
     const location = useLocation();
     return (
-        <Container>
-            <Text>Non dovresti essere qui...</Text>
-            <Text>Torna indietro e riprova!</Text>
-            <Text>{location.pathname}</Text>
-        </Container>
+        <Stack h={"100%"} justify="center" align="center">
+            <Card>
+                <Title>Pagina non trovata!</Title>
+                <Text>
+                    Non ho idea di come tua sia riuscito ad arrivare qua
+                </Text>
+                <Text>Path della pagina:</Text>
+                <Code block>{location.pathname}</Code>
+            </Card>
+        </Stack>
     );
 };

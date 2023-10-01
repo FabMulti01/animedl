@@ -4,24 +4,28 @@ import type AW from "@/types/sites/AnimeWorld/AnimeWorld";
 import { Button, Card, Image, Text } from "@mantine/core";
 
 interface props {
-    AW: AW;
+    Anime: AW;
 }
 
-export const AWSearchEntry: React.FC<props> = ({ AW }) => {
+export const AWSearchEntry: React.FC<props> = ({ Anime }) => {
     return (
         <>
             <Link
-                to={"/AWInfo/" + AW.nome.replaceAll("/", "%2F")}
-                state={[AW.nome, AW.link, AW.immagine]}
+                to={"/AWInfo/" + Anime.nome.replaceAll("/", "%2F")}
+                state={Anime}
             >
                 <Card withBorder w={224}>
                     <Card.Section>
-                        <Image src={AW.immagine} alt={AW.nome} height={320} />
+                        <Image
+                            src={Anime.immagine}
+                            alt={Anime.nome}
+                            height={320}
+                        />
                     </Card.Section>
                     <Card.Section>
                         <Button fullWidth>
-                            <Text title={AW.nome} truncate>
-                                {AW.nome}
+                            <Text title={Anime.nome} truncate>
+                                {Anime.nome}
                             </Text>
                         </Button>
                     </Card.Section>

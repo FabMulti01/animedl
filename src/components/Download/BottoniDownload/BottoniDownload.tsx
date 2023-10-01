@@ -10,7 +10,7 @@ import {
     VscTrash,
 } from "react-icons/vsc";
 import { ipcRenderer } from "electron";
-import Episodio from "@/types/Episodio";
+import { AnimeStore } from "@/stores/AnimeStore";
 
 interface props {
     stream: DownloaderHelper;
@@ -64,11 +64,14 @@ export const Stop: React.FC<props> = ({ stream, setColore, setAnimate }) => {
     );
 };
 
-export const Rimuovi: React.FC<{ episodio: Episodio }> = ({ episodio }) => {
+export const Rimuovi: React.FC<{
+    nome: string;
+    numero: string;
+}> = ({ nome, numero }) => {
     return (
         <Button
             onClick={() => {
-                episodio.removeEpisodio();
+                AnimeStore.removeEpisodio(nome, numero);
             }}
         >
             <VscTrash />

@@ -29,7 +29,11 @@ export async function loadNyaa(
     lingua = selettoreLingua(lingua);
     try {
         cheerio = await scraper(
-            NYAALINK + "?f=0&c=1_0&q=" + nome + lingua + ordine
+            NYAALINK +
+                "?f=0&c=1_0&q=" +
+                encodeURIComponent(nome) +
+                lingua +
+                ordine
         );
     } catch {
         return undefined;
@@ -76,21 +80,13 @@ export async function loadNyaa(
 }
 
 function selettoreLingua(lingua: string): string {
-    switch (lingua) {
-        case selettore.italiano: {
-            lingua = "+ita";
-            break;
-        }
-        case selettore.multilingua: {
-            lingua = "+multi";
-            break;
-        }
-        case selettore.inglese: {
-            lingua = "";
-            break;
-        }
-        default:
-            break;
+    if (lingua == selettore.italiano) {
+        lingua = "+ita";
+    } else if (lingua == selettore.multilingua) {
+        lingua = "+multi";
+    } else if (lingua == selettore.inglese) {
+        lingua = "";
     }
+
     return lingua;
 }
