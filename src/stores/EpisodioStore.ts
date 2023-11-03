@@ -8,6 +8,7 @@ export class EpisodioStore {
     episodio = new Map<string, Episodio>();
     readonly nome: string;
     readonly cartella: string;
+    readonly immagine: string;
     //Per i download
     percentualeMedia = "0";
     pesoTotale = 0;

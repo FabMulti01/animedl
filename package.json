@@ -8,8 +8,7 @@
     "scripts": {
         "start": "vite",
         "tsc": "tsc",
-        "build:dev": "tsc && vite build && electron-builder --publish never",
-        "build:release": "tsc && vite build && electron-builder --publish never"
+        "build:dev": "tsc && vite build && electron-builder --publish never"
     },
     "author": "FabMulti01",
     "license": "MIT",
@@ -37,10 +36,10 @@
     },
     "devDependencies": {
         "@types/cheerio": "^0.22.32",
-        "@types/react": "^18.2.24",
-        "@types/markdown-it": "^13.0.2",
-        "@vitejs/plugin-react": "^4.1.0",
-        "electron": "^26.2.4",
+        "@types/react": "^18.2.34",
+        "@types/markdown-it": "^13.0.5",
+        "@vitejs/plugin-react": "^4.1.1",
+        "electron": "^27.0.3",
         "electron-builder": "^24.6.4",
         "typescript": "^5.2.2",
         "vite": "^4.4.8",
@@ -67,6 +66,6 @@
         "react": "^18.2.0",
         "react-icons": "^4.11.0",
         "react-promise-suspense": "^0.3.4",
-        "react-router-dom": "^6.16.0"
+        "react-router-dom": "^6.18.0"
     }
 }

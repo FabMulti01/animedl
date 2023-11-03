@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Title, Table, Text } from "@mantine/core";
+import { Title, Table, Text, Stack } from "@mantine/core";
 import { AnimeStore } from "@/stores/AnimeStore";
 import { DownloadAnimeItem } from "./DownloadAnimeItem";
 
@@ -34,7 +34,9 @@ export const DownloadList: React.FC = observer(() => {
                     </tbody>
                 </Table>
             ) : (
-                <Text align="center">Non stai scaricando nulla!</Text>
+                <Stack h={"100%"} justify="center" align="center">
+                    <Text align="center">Non stai scaricando nulla!</Text>
+                </Stack>
             )}
         </>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Button, Group, Space } from "@mantine/core";
+import { Text, Button, Group, Space, Grid } from "@mantine/core";
 import type AW from "@/types/sites/AnimeWorld/AnimeWorld";
 import { AnimeDL } from "@/types/AnimeDL";
 import { AnimeStore } from "@/stores/AnimeStore";
@@ -29,14 +29,14 @@ export const DownloadButtons: React.FC<props> = ({ Anime }) => {
                 <>
                     <Button.Group>
                         <Button
-                            style={{ width: 226 }}
+                            fullWidth
                             onClick={() => {
                                 if (Anime.episodio.size > 50) {
                                     AnimeDL.conferma(
                                         "Attenzione!",
                                         "Stai cercando di scaricare " +
                                             Anime.episodio.size +
-                                            " episodi! Continuando l'applicazione potrebbe diventare instabile, sei sicuro?",
+                                            " episodi! Continuando l'applicazione potrebbe crashare, sei sicuro?",
                                         () => downloadHandler(),
                                         "Continua"
                                     );
@@ -49,7 +49,7 @@ export const DownloadButtons: React.FC<props> = ({ Anime }) => {
                         </Button>
                         {Anime.stato == "In corso" ? (
                             <Button
-                                style={{ width: 226 }}
+                                fullWidth
                                 onClick={() => {
                                     AnimeStore.addEpisodio(
                                         Anime.nome,
@@ -67,25 +67,27 @@ export const DownloadButtons: React.FC<props> = ({ Anime }) => {
                         )}
                     </Button.Group>
                     <Space h={15} />
-                    <Group>
+                    <Grid>
                         {Array.from(Anime.episodio.values()).map((episodio) => {
                             return (
-                                <Button
-                                    style={{ width: 140 }}
-                                    onClick={() => {
-                                        AnimeStore.addEpisodio(
-                                            episodio.nome,
-                                            Anime.cartella,
-                                            episodio
-                                        );
-                                    }}
-                                    key={episodio.numero}
-                                >
-                                    Episodio {episodio.numero}
-                                </Button>
+                                <Grid.Col span={4}>
+                                    <Button
+                                        fullWidth
+                                        onClick={() => {
+                                            AnimeStore.addEpisodio(
+                                                episodio.nome,
+                                                Anime.cartella,
+                                                episodio
+                                            );
+                                        }}
+                                        key={episodio.numero}
+                                    >
+                                        Episodio {episodio.numero}
+                                    </Button>
+                                </Grid.Col>
                             );
                         })}
-                    </Group>
+                    </Grid>
                 </>
             )}
         </>
