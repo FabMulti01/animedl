@@ -1,0 +1,19 @@
+appId: github.com/FabMulti01/animedl
+directories:
+    output: ./build
+files:
+    - ./dist/assets/*
+    - ./dist/index.html
+    - ./dist/main.js
+    - ./dist/preload.mjs
+compression: normal
+asar: true
+nsis:
+    shortcutName: AnimeDL
+    uninstallDisplayName: AnimeDL
+    oneClick: false
+    perMachine: true
+    allowElevation: true
+    allowToChangeInstallationDirectory: true
+    createDesktopShortcut: always
+    license: ./LICENSE

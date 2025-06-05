@@ -1,71 +1,51 @@
 {
     "name": "animedl",
     "productName": "AnimeDL",
-    "version": "1.4.3",
+    "version": "1.5.0",
+    "type": "module",
     "private": true,
     "description": "Motore di ricerca per anime italiani e torrent multilingua",
+    "author": "FabMulti01",
+    "license": "MIT",
+    "repository": "https://github.com/FabMulti01/animedl.git",
     "main": "dist/main.js",
     "scripts": {
         "start": "vite",
-        "tsc": "tsc",
-        "build:dev": "tsc && vite build && electron-builder --publish never"
-    },
-    "author": "FabMulti01",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/FabMulti01/animedl/issues"
-    },
-    "repository": "https://github.com/FabMulti01/animedl",
-    "build": {
-        "files": [
-            "dist/main.js",
-            "dist/index.html",
-            "dist/assets/*"
-        ],
-        "appId": "com.eps.animedl",
-        "compression": "maximum",
-        "nsis": {
-            "oneClick": false,
-            "perMachine": true,
-            "allowElevation": true,
-            "allowToChangeInstallationDirectory": true,
-            "deleteAppDataOnUninstall": false,
-            "createDesktopShortcut": "always",
-            "shortcutName": "AnimeDL"
-        }
+        "build:dev": "tsc && vite build && electron-builder --publish never",
+        "tsc": "tsc"
     },
     "devDependencies": {
-        "@types/cheerio": "^0.22.32",
-        "@types/react": "^18.2.34",
-        "@types/markdown-it": "^13.0.5",
-        "@vitejs/plugin-react": "^4.1.1",
-        "electron": "^27.0.3",
-        "electron-builder": "^24.6.4",
-        "typescript": "^5.2.2",
-        "vite": "^4.4.8",
-        "vite-electron-plugin": "^0.8.2",
-        "vite-plugin-electron-renderer": "^0.14.2",
-        "vite-tsconfig-paths": "^4.2.1"
+        "@types/react": "^19.1.6",
+        "@types/react-dom": "^19.1.6",
+        "@vitejs/plugin-react": "^4.5.1",
+        "electron": "^36.4.0",
+        "electron-builder": "^26.0.12",
+        "postcss": "^8.5.4",
+        "postcss-preset-mantine": "^1.17.0",
+        "postcss-simple-vars": "^7.0.1",
+        "typescript": "^5.8.3",
+        "vite": "^6.3.5",
+        "vite-plugin-electron": "^0.29.0",
+        "vite-plugin-electron-renderer": "^0.14.6",
+        "vite-tsconfig-paths": "^5.1.4"
     },
     "dependencies": {
-        "@mantine/core": "=6.0.21",
-        "@mantine/form": "=6.0.21",
-        "@mantine/hooks": "=6.0.21",
-        "@mantine/modals": "=6.0.21",
-        "@mantine/notifications": "=6.0.21",
-        "@mantine/nprogress": "=6.0.21",
-        "cheerio": "^1.0.0-rc.12",
-        "classnames": "^2.3.2",
-        "electron-store": "^8.1.0",
-        "electron-updater": "^6.1.4",
-        "filenamify": "^6.0.0",
-        "markdown-it": "^13.0.2",
-        "mobx": "^6.10.2",
-        "mobx-react": "^9.0.1",
+        "@mantine/core": "^8.0.0",
+        "@mantine/hooks": "^8.0.0",
+        "@mantine/modals": "^8.0.2",
+        "@mantine/notifications": "^8.0.2",
+        "@tabler/icons-react": "^3.34.0",
+        "@types/markdown-it": "^14.1.2",
+        "cheerio": "^1.0.0",
+        "electron-store": "^10.0.1",
+        "electron-updater": "^6.6.2",
+        "markdown-it": "^14.1.0",
+        "mobx": "^6.13.7",
+        "mobx-react-lite": "^4.1.0",
         "node-downloader-helper": "^2.1.9",
-        "react": "^18.2.0",
-        "react-icons": "^4.11.0",
-        "react-promise-suspense": "^0.3.4",
-        "react-router-dom": "^6.18.0"
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "react-error-boundary": "^6.0.0",
+        "react-router": "^7.6.2"
     }
 }

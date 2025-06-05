@@ -1,6 +1,4 @@
-#Dev
-/node_modules
-/app
-/dist
+node_modules
+dist
+build
 package-lock.json
-Changelog.md

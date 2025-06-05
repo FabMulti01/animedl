@@ -1,32 +1,38 @@
+/* Piccola animazione per le parti interattive */
+input,
+button,
+span {
+    transition-duration: 100ms;
+}
+
 .drag {
     -webkit-app-region: drag;
 }
 
-.titlebar {
+.no-drag {
     -webkit-app-region: no-drag;
-    height: 31px;
 }
 
 /* Il bottone per uscire diventa rosso */
 .exit:hover {
-    color: white;
     background-color: #c90000;
 }
 
-/* Piccola animazione per le parti interattive */
-button,
-a,
-tr {
-    transition-duration: 100ms;
+/* Icone */
+svg {
+    stroke-width: 1;
+    height: 20px;
+    width: 20px;
 }
 
-/* Mi serve per rimuovere la linetta sotto ai navlink */
+/* Per i navlink */
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 /* Custom CSS per le informazioni di Nyaa che blocca i link e imposta le grandezze massime */
-.nyaaInfo img {
+.torrentInfo img {
     margin-left: auto;
     margin-right: auto;
     max-width: 100%;
@@ -34,14 +40,15 @@ a {
     user-select: none;
 }
 
-.nyaaInfo a {
+.torrentInfo a {
+    /* Disabilito i link su Nyaa, oppure si apre la pagina dentro l'app */
     pointer-events: none !important;
 }
 
-.infoNyaa p {
+.torrentInfo p {
     text-align: justify;
 }
 
-.infoNyaa pre {
+.torrentInfo pre {
     overflow: auto;
 }

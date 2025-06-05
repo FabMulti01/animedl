@@ -1,16 +1,16 @@
-import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
-import { initRenderer } from "electron-store";
+import { app, BrowserWindow, dialog, ipcMain, shell } from "electron";
 import { autoUpdater } from "electron-updater";
+import { mkdirSync } from "fs";
+import path from "path";
+import Store from "electron-store";
 
-let win: Electron.BrowserWindow;
+//Main window
+let win: BrowserWindow;
 
 //Store
-initRenderer();
+Store.initRenderer();
 
-//Serve per dire a windows che App é
-app.setAppUserModelId(app.getName());
-
-function createWindow() {
+const createWindow = () => {
     win = new BrowserWindow({
         width: 1024,
         height: 768,
@@ -20,12 +20,18 @@ function createWindow() {
         center: true,
         show: false,
         fullscreenable: false,
+        icon: "icon.png",
         webPreferences: {
+            devTools: false,
+            webSecurity: false,
             nodeIntegration: true,
             contextIsolation: false,
-            //Devo disabilitarlo per avere l'accesso con http request
-            webSecurity: false,
+            preload: path.join(app.getAppPath(), "dist/preload.mjs"),
         },
+    });
+    //Impedisco all'utente di navigare in altri link dall'app
+    win.webContents.on("will-navigate", (event) => {
+        event.preventDefault();
     });
 
     if (process.env.VITE_DEV_SERVER_URL) {
@@ -33,85 +39,113 @@ function createWindow() {
     } else {
         win.loadFile("dist/index.html");
     }
-}
+};
+
+//Singola istanza
 if (app.requestSingleInstanceLock({ additionalData: "AnimeDL" })) {
     app.whenReady().then(() => {
         createWindow();
         win.once("ready-to-show", () => {
             win.show();
-            //Imposto il path di download di sistema
-            win.webContents.send("setDownloadFolder", app.getPath("downloads"));
         });
     });
 } else {
     app.quit();
 }
-//Controlli nella Topnav
-ipcMain.handle("minimize", () => {
+
+//Controlli della finestra
+ipcMain.on("minimize", () => {
     win.minimize();
 });
 
-ipcMain.handle("maximize", () => {
+ipcMain.on("maximize", () => {
     win.maximize();
 });
-ipcMain.handle("restore", () => {
+
+ipcMain.on("restore", () => {
     win.restore();
 });
-ipcMain.handle("close", () => {
+
+ipcMain.once("close", () => {
     win.close();
 });
 
-ipcMain.handle("getDownloadFolder", () => {
-    return app.getPath("downloads") + "\\AnimeDL";
+//Controlli per le cartelle
+ipcMain.on("folderOpen", (event, path: string) => {
+    shell.openPath(path);
 });
 
-//Seleziona la cartella dove salvare
-ipcMain.handle("selectDir", () => {
-    const dir = dialog.showOpenDialogSync(win, {
-        properties: ["openDirectory"],
-        title: "Scegli la cartella dove salvare gli Anime",
-    });
-    return dir;
+ipcMain.handle("folderCreate", (event, path: string) => {
+    return mkdirSync(path, { recursive: true });
 });
 
-//Apre la cartella dove é salvato l'anime
-ipcMain.handle("openDir", (event, dir) => {
-    shell.openPath(dir);
+ipcMain.handle("folderSelect", () => {
+    try {
+        return dialog.showOpenDialogSync(win, {
+            properties: ["openDirectory"],
+        })[0];
+    } catch {
+        return null;
+    }
 });
 
-//Apre il browser con il link dato
-ipcMain.handle("apriBrowser", (event, link) => {
-    shell.openExternal(link);
+ipcMain.on("folderUserGet", (event, path) => {
+    event.returnValue = app.getPath(path);
 });
 
-//Messaggio info custom
-ipcMain.handle("messaggioInfo", (event, title, message) => {
-    dialog.showMessageBox({ title: title, message: message });
+//Browser
+ipcMain.on("browserOpen", (event, url) => {
+    shell.openExternal(url);
 });
 
-//Notifica
-ipcMain.handle("notifica", (event, title, body) => {
-    new Notification(title, { body: body });
+//App
+ipcMain.on("appVersion", (event) => {
+    event.returnValue = app.getVersion();
 });
 
-//Aggiornamento
-ipcMain.handle("checkUpdate", () => {
-    autoUpdater.checkForUpdates();
+ipcMain.on("appNodeVersion", (event) => {
+    event.returnValue = process.versions.node;
+});
+
+ipcMain.on("appElectronVersion", (event) => {
+    event.returnValue = process.versions.electron;
+});
+
+ipcMain.on("appChromeVersion", (event) => {
+    event.returnValue = process.versions.chrome;
+});
+
+ipcMain.on("appReset", () => {
+    win.reload();
+});
+
+//Update
+autoUpdater.autoDownload = false;
+autoUpdater.disableWebInstaller = true;
+//autoUpdater.forceDevUpdateConfig = true;
+
+ipcMain.handle("updateCheck", () => {
+    try {
+        return autoUpdater.checkForUpdates().then((info) => {
+            return info;
+        });
+    } catch (e) {
+        return e.message;
+    }
+});
+
+ipcMain.on("updateStart", () => {
+    autoUpdater.downloadUpdate();
+});
+
+autoUpdater.on("download-progress", (info) => {
+    win.webContents.send("downloadProgress", info);
+});
+
+autoUpdater.on("update-downloaded", (event) => {
+    win.webContents.send("downloadCompleted");
 });
 
 autoUpdater.on("error", (error) => {
-    win.webContents.send("test", error);
-});
-
-//Utility per aggiornamento
-autoUpdater.on("update-available", () => {
-    win.webContents.send("updateDisponibile");
-});
-
-autoUpdater.on("checking-for-update", () => {
-    win.webContents.send("updateInfo", "Controllo se ci sono aggiornamenti...");
-});
-
-autoUpdater.on("update-not-available", () => {
-    win.webContents.send("updateInfo", "Nessun aggiornamento disponibile!");
+    win.webContents.send("downloadError", error.message);
 });
