@@ -4,6 +4,7 @@ import type IEpisodioStore from "@interfaces/IEpisodioStore";
 import { makeAutoObservable, runInAction } from "mobx";
 import { Impostazioni } from "./Impostazioni";
 import { notifications } from "@mantine/notifications";
+import filenamify from "filenamify";
 
 class EpisodioStore implements IEpisodioStore {
     readonly sito: string;
@@ -86,7 +87,7 @@ class DownloadStoreImpl {
         const path =
             Impostazioni.downloadDir +
             "\\" +
-            titolo.replaceAll(/[^a-z 0-9]/gi, "-");
+            filenamify(titolo, { replacement: " " });
         if (!this.anime.has(titolo)) {
             this.anime.set(titolo, new EpisodioStore(sito, path));
             this.add(sito, titolo, episodio, url);

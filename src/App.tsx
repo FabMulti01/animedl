@@ -29,7 +29,7 @@ const App = () => {
                     <Box flex={"auto"}>
                         <Card h="100%" withBorder>
                             <LoadingOverlay
-                                transitionProps={{ duration: 250 }}
+                                transitionProps={{ duration: 200 }}
                                 visible={navigation.state == "loading"}
                                 overlayProps={{ blur: 2 }}
                             />

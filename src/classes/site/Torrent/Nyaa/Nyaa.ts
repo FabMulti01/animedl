@@ -83,9 +83,9 @@ export default class Nyaa implements Torrent {
 
     getLingua(): TorrentLingua {
         return {
-            tutto: "",
-            multilingua: "+multi",
-            italiano: "+ita",
+            TUTTO: "",
+            MULTILINGUA: "+multi",
+            ITALIANO: "+ita",
         };
     }
 

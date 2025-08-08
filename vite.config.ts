@@ -10,10 +10,12 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 manualChunks: {
-                    "mantine-core": ["@mantine/core"],
                     cheerio: ["cheerio"],
-                    "react-router": ["react-router"],
                     "electron-store": ["electron-store"],
+                    "mantine-core": ["@mantine/core"],
+                    mobx: ["mobx"],
+                    "react-router": ["react-router"],
+                    "node-downloader-helper": ["node-downloader-helper"],
                 },
             },
         },

@@ -31,7 +31,7 @@ const DDLInfoDownloadOther = ({
             >
                 Scarica tutti gli episodi
             </Button>
-            <Text>Scarica episodio specifico</Text>
+            <Text>Scarica episodio specifico:</Text>
             <NumberInput
                 min={0}
                 value={scelta}

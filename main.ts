@@ -22,7 +22,7 @@ const createWindow = () => {
         fullscreenable: false,
         icon: "icon.png",
         webPreferences: {
-            devTools: false,
+            //devTools: false,
             webSecurity: false,
             nodeIntegration: true,
             contextIsolation: false,

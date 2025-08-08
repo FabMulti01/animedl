@@ -3,11 +3,11 @@ import { SegmentedControl, Title } from "@mantine/core";
 
 const TorrentSearchLingua = ({
     lingua,
-    setLingua,
+    handleLingua,
     scelta,
 }: {
     lingua: TorrentLingua;
-    setLingua(lingua: string): void;
+    handleLingua(lingua: string): void;
     scelta: string;
 }) => {
     return (
@@ -18,11 +18,13 @@ const TorrentSearchLingua = ({
                 color="cyan"
                 transitionDuration={0}
                 value={scelta}
-                onChange={setLingua}
+                onChange={(value) => {
+                    handleLingua(value);
+                }}
                 data={[
-                    { label: "Tutto", value: lingua.tutto },
-                    { label: "Multilingua", value: lingua.multilingua },
-                    { label: "Italiano", value: lingua.italiano },
+                    { label: "Tutto", value: lingua.TUTTO },
+                    { label: "Multilingua", value: lingua.MULTILINGUA },
+                    { label: "Italiano", value: lingua.ITALIANO },
                 ]}
             />
         </>

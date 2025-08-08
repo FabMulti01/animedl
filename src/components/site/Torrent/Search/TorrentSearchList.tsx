@@ -5,7 +5,6 @@ import TorrentSearchMagnet from "./TorrentSearchMagnet.js";
 
 const TorrentList = ({ lista }: { lista: TorrentAnime[] }) => {
     const navigate = useNavigate();
-
     return lista.map((torrent) => {
         return (
             <Table.Tr key={torrent.url}>

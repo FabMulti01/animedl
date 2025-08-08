@@ -23,7 +23,8 @@ const Home = () => {
             setErrore(true);
         } else {
             submit(e, {
-                action: tipo + "/search/" + sito + "/" + titolo,
+                action:
+                    tipo + "/search/" + sito + "/" + encodeURIComponent(titolo),
                 viewTransition: true,
             });
         }

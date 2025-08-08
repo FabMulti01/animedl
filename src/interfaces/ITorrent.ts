@@ -57,7 +57,7 @@ export type TorrentOrdine = {
 };
 
 export type TorrentLingua = {
-    readonly tutto: string;
-    readonly multilingua: string;
-    readonly italiano: string;
+    readonly TUTTO: string;
+    readonly MULTILINGUA: string;
+    readonly ITALIANO: string;
 };
