@@ -144,7 +144,7 @@ export default class Nyaa implements Torrent {
                 cheerio.find(".panel-title").eq(0).text().trim(),
                 url,
                 //Seed
-                cheerio.find(".col-md-5 span").eq(1).text(),
+                cheerio.find(".col-md-5 span").eq(0).text(),
                 //Peso
                 cheerio.find(".row").eq(3).find(".col-md-5").eq(0).text(),
                 //Data
