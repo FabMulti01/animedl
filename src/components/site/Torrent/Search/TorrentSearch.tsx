@@ -17,10 +17,16 @@ const TorrentSearch = () => {
         titolo: string;
         torrent: Torrent;
     };
-    const [ORDINE, setOrdine] = useState<string>(torrent.getOrdine().DATA_DESC);
-    const [LINGUA, setLingua] = useState<string>(torrent.getLingua().TUTTO);
+    const [ORDINE, setOrdine] = useState<string>(
+        searchparams.get("ordine") ?? torrent.getOrdine().DATA_DESC
+    );
+    const [LINGUA, setLingua] = useState<string>(
+        searchparams.get("lingua") ?? torrent.getLingua().TUTTO
+    );
     //É sempre presente almeno una pagina
-    const [PAGINA, setPagina] = useState<number>(1);
+    const [PAGINA, setPagina] = useState<number>(
+        parseInt(searchparams.get("pagina")) || 1
+    );
 
     //Il primo render non deve essere presente nello storico in quanto non ha dati
     useEffect(() => {
