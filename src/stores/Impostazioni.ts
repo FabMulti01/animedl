@@ -2,7 +2,7 @@ import Sites from "@classes/site/Sites";
 import type { MantineColorScheme } from "@mantine/core";
 import Store from "electron-store";
 
-const store = new Store({ name: "settings", clearInvalidConfig: false });
+const store = new Store({ name: "settings", clearInvalidConfig: true });
 
 class ImpostazioniImpl {
     set downloadDir(path: string) {
@@ -14,6 +14,22 @@ class ImpostazioniImpl {
             "downloadDir",
             window.folder.default("downloads")
         ) as string;
+    }
+
+    set tema(tema: MantineColorScheme) {
+        store.set("tema", tema);
+    }
+
+    get tema(): MantineColorScheme {
+        return store.get("tema", "auto") as MantineColorScheme;
+    }
+
+    set checkForUpdate(check: boolean) {
+        store.set("checkForUpdate", check);
+    }
+
+    get checkForUpdate(): boolean {
+        return store.get("checkForUpdate", true) as boolean;
     }
 
     set downloadedBytes(bytes: number) {
@@ -42,14 +58,6 @@ class ImpostazioniImpl {
             //Prendo il primo sito nella lista come default
             Sites.getNomi()[0]
         ) as string;
-    }
-
-    set tema(tema: MantineColorScheme) {
-        store.set("tema", tema);
-    }
-
-    get tema(): MantineColorScheme {
-        return store.get("tema", "auto") as MantineColorScheme;
     }
 
     reset() {

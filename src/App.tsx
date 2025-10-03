@@ -13,6 +13,7 @@ export const NavbarContext = createContext({
 const App = () => {
     const navigation = useNavigation();
     const [opened, setOpened] = useState(Impostazioni.collapsedNavbar);
+
     return (
         <NavbarContext value={{ opened, setOpened }}>
             <AppShell
