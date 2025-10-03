@@ -9,11 +9,16 @@ import "@mantine/notifications/styles.css";
 import "@mantine/core/styles.css";
 import "./styles/custom.css";
 import { Notifications } from "@mantine/notifications";
+import Update from "@components/update/Update";
 
 const theme = createTheme({
     fontFamily: "Arial",
     primaryColor: "cyan",
 });
+
+if (Impostazioni.checkForUpdate) {
+    Update.check(false);
+}
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>

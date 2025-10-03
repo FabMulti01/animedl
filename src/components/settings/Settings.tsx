@@ -8,6 +8,7 @@ import Scaricato from "./Scaricato.js";
 import Segnala from "./Segnala.js";
 import { modals } from "@mantine/modals";
 import Aggiorna from "./Aggiorna.js";
+import VerificaAggiornamento from "./VerificaAggiornamenti.js";
 
 const Settings = () => {
     return (
@@ -24,6 +25,7 @@ const Settings = () => {
                     <Cartella />
                     <Tema />
                     <Scaricato />
+                    <VerificaAggiornamento />
                     <Aggiorna />
                     <Segnala />
                     <Reset />

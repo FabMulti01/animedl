@@ -1,27 +1,30 @@
 import { modals } from "@mantine/modals";
 import { notifications } from "@mantine/notifications";
-import { Button, Card, Text, Code } from "@mantine/core";
+import { Button, Text, Code } from "@mantine/core";
 import UpdateModalBody from "./UpdateModalBody";
 import exitCheck from "@functions/exitCheck";
 import ModalBody from "@components/utils/ModalBody";
 
 export default class Update {
-    static check() {
-        notifications.show({
-            id: "update",
-            title: "Aggiornamento",
-            message: "Sto verificando se ci sono aggiornamenti disponibili...",
-            loading: true,
-            withBorder: true,
-            autoClose: false,
-        });
+    static check(show: boolean = true) {
+        if (show) {
+            notifications.show({
+                id: "update",
+                title: "Aggiornamento",
+                message:
+                    "Sto verificando se ci sono aggiornamenti disponibili...",
+                loading: true,
+                withBorder: true,
+                autoClose: false,
+            });
+        }
         window.app.update
             .check()
             .then((info) => {
                 if (info.isUpdateAvailable) {
                     notifications.clean();
                     modals.openConfirmModal({
-                        title: "Aggiornamento disponibile",
+                        title: "Aggiornamento disponibile!",
                         centered: true,
                         children: (
                             <ModalBody
@@ -42,26 +45,34 @@ export default class Update {
                             />
                         ),
                         labels: { confirm: "Aggiorna", cancel: "Annulla" },
-                        onConfirm: () => Update.start(),
+                        onConfirm: () => {
+                            //Rimetto a true in caso si verificano errori
+                            show = true;
+                            Update.start();
+                        },
                     });
                 } else {
-                    notifications.update({
-                        id: "update",
-                        message: "Nessun aggiornamento disponibile",
-                        loading: false,
-                        autoClose: 4000,
-                    });
+                    if (show) {
+                        notifications.update({
+                            id: "update",
+                            message: "Nessun aggiornamento disponibile",
+                            loading: false,
+                            autoClose: 4000,
+                        });
+                    }
                 }
             })
             .catch((e: string) => {
-                Update.error(e);
+                if (show) {
+                    Update.error(e);
+                }
             });
     }
 
     private static start() {
         window.app.update.start();
         modals.open({
-            title: "Aggiornamento in corso...",
+            title: "Download dell'aggiornamento in corso...",
             centered: true,
             closeOnEscape: false,
             closeOnClickOutside: false,

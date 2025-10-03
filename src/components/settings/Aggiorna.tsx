@@ -10,7 +10,7 @@ const Aggiorna = () => {
                 <Text>Verifica se ci sono aggiornamenti</Text>
             </Table.Td>
             <Table.Td>
-                <Button onClick={Update.check} fullWidth>
+                <Button onClick={() => Update.check()} fullWidth>
                     <IconProgressCheck />
                 </Button>
             </Table.Td>
